@@ -334,7 +334,7 @@
 
 <script>
 const saved = localStorage.getItem('gvo-favorites');
-const favorites = new Set(saved ? JSON.parse(saved) : []);
+const favorites = new Set(saved ? JSON.parse(saved).map(Number) : []);
 let currentFilter = 'all';
 
 const stages = [
