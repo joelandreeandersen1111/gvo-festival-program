@@ -333,7 +333,8 @@
 </main>
 
 <script>
-const favorites = new Set();
+const saved = localStorage.getItem('gvo-favorites');
+const favorites = new Set(saved ? JSON.parse(saved) : []);
 let currentFilter = 'all';
 
 const stages = [
@@ -393,6 +394,7 @@ const hours = Array.from({length:10}, (_,i) => i+10);
 function toggleFav(id) {
   if (favorites.has(id)) favorites.delete(id);
   else favorites.add(id);
+  localStorage.setItem('gvo-favorites', JSON.stringify([...favorites]));
   document.getElementById('fav-count').textContent = favorites.size;
   render();
   renderFavList();
@@ -476,6 +478,8 @@ function render() {
 }
 
 render();
+renderFavList();
+document.getElementById('fav-count').textContent = favorites.size;
 </script>
 </body>
 </html>
