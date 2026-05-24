@@ -403,6 +403,7 @@ function toggleFav(id) {
 function toggleFavPanel() {
   const p = document.getElementById('fav-panel');
   p.classList.toggle('show');
+  localStorage.setItem('gvo-panel-open', p.classList.contains('show'));
   renderFavList();
 }
 
@@ -480,6 +481,10 @@ function render() {
 render();
 renderFavList();
 document.getElementById('fav-count').textContent = favorites.size;
+if (localStorage.getItem('gvo-panel-open') === 'true') {
+  document.getElementById('fav-panel').classList.add('show');
+  renderFavList();
+}
 </script>
 </body>
 </html>
