@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- VERSION 2.6 — fuld synlighed af kort i højre side -->
+<!-- VERSION 2.8 — kort viser altid alt indhold + mere luft i siderne -->
 <html lang="da">
 <head>
 <meta charset="UTF-8">
@@ -15,7 +15,7 @@
   --black: #0f0f0f; --off-black: #1a1a18; --orange: #E8891A;
   --white: #f5f3ee; --muted: #888880; --card: #222220;
   --border: rgba(255,255,255,0.08);
-  --musik: #E8891A; --talk: #4CAF8A; --comedy: #9B7FD4; --panel: #5B9BD5;
+  --s0: #F5A623; --s1: #E8524A; --s2: #F0C030; --s3: #5B9BD5;
 }
 
 html, body { height: 100%; width: 100%; overflow: hidden; background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; }
@@ -36,19 +36,18 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
 .tabs::-webkit-scrollbar { display: none; }
 .tab { padding: 4px 11px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 11px; cursor: pointer; white-space: nowrap; flex-shrink: 0; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
 
-/* Scene tabs */
 .tab.on.ca  { background: var(--white);   color: var(--black); border-color: var(--white);   font-weight: 500; }
-.tab.on.c0  { background: var(--musik);   color: #fff;         border-color: var(--musik);   font-weight: 500; }
-.tab.on.c1  { background: var(--talk);    color: #fff;         border-color: var(--talk);    font-weight: 500; }
-.tab.on.c2  { background: var(--comedy);  color: #fff;         border-color: var(--comedy);  font-weight: 500; }
-.tab.on.c3  { background: var(--panel);   color: #fff;         border-color: var(--panel);   font-weight: 500; }
+.tab.on.c0  { background: var(--s0);      color: #000;         border-color: var(--s0);      font-weight: 500; }
+.tab.on.c1  { background: var(--s1);      color: #fff;         border-color: var(--s1);      font-weight: 500; }
+.tab.on.c2  { background: var(--s2);      color: #000;         border-color: var(--s2);      font-weight: 500; }
+.tab.on.c3  { background: var(--s3);      color: #fff;         border-color: var(--s3);      font-weight: 500; }
 
-/* Type tabs — same style */
+/* Type tabs — no color, just white when active */
 .tab.on.ta  { background: var(--white);   color: var(--black); border-color: var(--white);   font-weight: 500; }
-.tab.on.tm  { background: var(--musik);   color: #fff;         border-color: var(--musik);   font-weight: 500; }
-.tab.on.tt  { background: var(--talk);    color: #fff;         border-color: var(--talk);    font-weight: 500; }
-.tab.on.tc  { background: var(--comedy);  color: #fff;         border-color: var(--comedy);  font-weight: 500; }
-.tab.on.tp  { background: var(--panel);   color: #fff;         border-color: var(--panel);   font-weight: 500; }
+.tab.on.tm  { background: var(--white);   color: var(--black); border-color: var(--white);   font-weight: 500; }
+.tab.on.tt  { background: var(--white);   color: var(--black); border-color: var(--white);   font-weight: 500; }
+.tab.on.tc  { background: var(--white);   color: var(--black); border-color: var(--white);   font-weight: 500; }
+.tab.on.tp  { background: var(--white);   color: var(--black); border-color: var(--white);   font-weight: 500; }
 .tab.on.tf  { background: var(--orange);  color: #fff;         border-color: var(--orange);  font-weight: 500; }
 
 .tdot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 3px; vertical-align: middle; }
@@ -90,7 +89,7 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
   flex-direction: column;
   min-width: 100%;
   width: max-content;
-  padding: 0 24px 60px;
+  padding: 0 40px 60px;
 }
 
 #stage-row {
@@ -102,20 +101,20 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
 #grid-body { display: flex; padding-top: 16px; }
 .time-gap { width: 50px; flex-shrink: 0; }
 .sh { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 1px; text-align: center; padding: 4px 4px 3px; }
-.sh0 { color: var(--musik);  border-bottom: 2px solid var(--musik); }
-.sh1 { color: var(--talk);   border-bottom: 2px solid var(--talk); }
-.sh2 { color: var(--comedy); border-bottom: 2px solid var(--comedy); }
-.sh3 { color: var(--panel);  border-bottom: 2px solid var(--panel); }
+.sh0 { color: var(--s0); border-bottom: 2px solid var(--s0); }
+.sh1 { color: var(--s1); border-bottom: 2px solid var(--s1); }
+.sh2 { color: var(--s2); border-bottom: 2px solid var(--s2); }
+.sh3 { color: var(--s3); border-bottom: 2px solid var(--s3); }
 #time-col { width: 50px; flex-shrink: 0; position: relative; }
 .tl { position: absolute; right: 6px; font-size: 10px; color: var(--muted); transform: translateY(-50%); white-space: nowrap; }
-.stage-col { position: relative; } /* width set dynamically */
+.stage-col { position: relative; margin-right: 8px; }
 .hl { position: absolute; left: 0; right: 0; border-top: 1px solid rgba(255,255,255,0.04); pointer-events: none; }
 
 .ec {
-  position: absolute; left: 3px; right: 3px;
+  position: absolute; left: 4px; right: 4px;
   background: var(--card); border: 1px solid var(--border);
   border-left: 3px solid var(--lc, #555);
-  border-radius: 7px; padding: 5px 7px; overflow: hidden; cursor: pointer;
+  border-radius: 8px; padding: 7px 10px; overflow: hidden; cursor: pointer;
   transition: opacity 0.15s;
 }
 .ec.fav { border-color: var(--orange); border-left-color: var(--orange); background: rgba(232,137,26,0.1); }
@@ -132,15 +131,15 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
   <div class="header-row">
     <div>
       <div class="logo">Good <span>Vibes</span> Only</div>
-      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22 · <span style="color:var(--orange)">v2.6</span></div>
+      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22 · <span style="color:var(--orange)">v2.8</span></div>
     </div>
     <button class="fav-btn" onclick="toggleFavPanel()">♥ Favoritter (<span id="fc">0</span>)</button>
   </div>
   <div class="tabs" id="stabs">
     <button class="tab ca on" onclick="setStage('all',this)">Alle scener</button>
-    <button class="tab c0"   onclick="setStage(0,this)">🎵 Fyrtårnet</button>
-    <button class="tab c1"   onclick="setStage(1,this)">🎸 Hjerterytmen</button>
-    <button class="tab c2"   onclick="setStage(2,this)">🎤 Solstrålen</button>
+    <button class="tab c0"   onclick="setStage(0,this)">🔦 Fyrtårnet</button>
+    <button class="tab c1"   onclick="setStage(1,this)">❤️ Hjerterytmen</button>
+    <button class="tab c2"   onclick="setStage(2,this)">☀️ Solstrålen</button>
     <button class="tab c3"   onclick="setStage(3,this)">💬 Dialog Scenen</button>
   </div>
   <div class="tabs" id="ttabs">
@@ -177,14 +176,15 @@ const favs = new Set(SF ? JSON.parse(SF).map(Number) : []);
 let cStage = 'all', cType = 'all';
 
 const DAY0=600, DAY1=1320, PPM=1.5, TIME_W=50;
+const SC=['#F5A623','#E8524A','#F0C030','#5B9BD5'];
 const stages=[
-  {n:'Fyrtårnet',    s:'Hovedscene',    c:'sh0'},
-  {n:'Hjerterytmen', s:'Scene',         c:'sh1'},
-  {n:'Solstrålen',   s:'Talks/Podcast', c:'sh2'},
-  {n:'Dialog Scenen',s:'Panel/Talks',   c:'sh3'},
+  {n:'🔦 Fyrtårnet',     s:'Hovedscene',    c:'sh0'},
+  {n:'❤️ Hjerterytmen',  s:'Scene',         c:'sh1'},
+  {n:'☀️ Solstrålen',    s:'Talks/Podcast', c:'sh2'},
+  {n:'💬 Dialog Scenen', s:'Panel/Talks',   c:'sh3'},
 ];
-const TC={musik:'#E8891A',talk:'#4CAF8A',comedy:'#9B7FD4',panel:'#5B9BD5'};
-const TL={musik:'Musik',talk:'Talk/Podcast',comedy:'Comedy',panel:'Paneldebat'};
+const TC={musik:'#aaa',talk:'#aaa',comedy:'#aaa',panel:'#aaa'};
+const TL={musik:'🎵 Musik',talk:'🎤 Talk/Podcast',comedy:'😄 Comedy',panel:'🗣️ Paneldebat'};
 
 const evs=[
   {id:1, g:0,sM:690, eM:720, t:'musik',n:'Bifald',           ti:'11:30–12:00'},
@@ -254,7 +254,7 @@ function renderFavList(){
   if(!fe.length){list.innerHTML='<p class="fi-empty">Tryk på et event for at tilføje til favoritter</p>';return;}
   list.innerHTML=fe.map(e=>`
     <div class="fi">
-      <div class="fi-dot" style="background:${TC[e.t]}"></div>
+      <div class="fi-dot" style="background:${SC[e.g]}"></div>
       <div class="fi-name">${e.n}</div>
       <div class="fi-time">${e.ti}<br>${stages[e.g].n}</div>
       <button class="fi-rm" onclick="saveFav(${e.id})">✕</button>
@@ -276,7 +276,7 @@ function setType(t,btn){
 
 // Calculate column width to fill available space
 function calcColWidth(numCols){
-  const available = window.innerWidth - TIME_W - 48; // subtract time col + padding
+  const available = window.innerWidth - TIME_W - 80 - (numCols * 8); // subtract time col + padding + gaps
   const minW = 140;
   const natural = Math.floor(available / numCols);
   return Math.max(natural, minW);
@@ -314,13 +314,15 @@ function render(){
       col.appendChild(hl);
     }
     evs.filter(e=>e.g===si).forEach(e=>{
-      const top=(e.sM-DAY0)*PPM;
-      const h=Math.max((e.eM-e.sM)*PPM-4,30);
+      const slotH = (e.eM-e.sM)*PPM - 4;
+      const minH  = 58; // enough for type + name + time
+      const h     = Math.max(slotH, minH);
+      const top  = (e.sM-DAY0)*PPM;
       const f=favs.has(e.id),v=vis(e);
       const card=document.createElement('div');
       card.className=`ec${f?' fav':''}${!v?' hide':''}`;
-      card.style.cssText=`top:${top}px;height:${h}px;--lc:${TC[e.t]}`;
-      card.innerHTML=`<div class="ec-type" style="color:${TC[e.t]}">${TL[e.t]}</div><div class="ec-name">${e.n}</div><div class="ec-time">${e.ti}</div><div class="ec-heart">${f?'❤️':'🤍'}</div>`;
+      card.style.cssText=`top:${top}px;height:${h}px;--lc:${SC[si]}`;
+      card.innerHTML=`<div class="ec-type" style="color:#aaa">${TL[e.t]}</div><div class="ec-name">${e.n}</div><div class="ec-time">${e.ti}</div><div class="ec-heart">${f?'❤️':'🤍'}</div>`;
       card.addEventListener('click',()=>saveFav(e.id));
       col.appendChild(card);
     });
