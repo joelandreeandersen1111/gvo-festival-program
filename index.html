@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- VERSION 2.1 — tilføjet no-cache headers -->
+<!-- VERSION 2.3 — desktop layout fix + lukke-kryds på favoritpanel -->
 <html lang="da">
 <head>
 <meta charset="UTF-8">
@@ -18,18 +18,17 @@
   --musik: #E8891A; --talk: #4CAF8A; --comedy: #9B7FD4; --panel: #5B9BD5;
 }
 
-/* Full screen, no body scroll */
 html, body { height: 100%; width: 100%; overflow: hidden; background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; }
 
-/* HEADER — fixed at top */
+/* ── HEADER ── */
 #header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   background: var(--off-black); border-bottom: 1px solid var(--border);
-  padding: 10px 12px 6px;
+  padding: 10px 16px 6px;
 }
+.header-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
 .logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; }
 .logo span { color: var(--orange); }
-.header-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
 .meta { font-size: 10px; color: var(--muted); margin-top: 2px; }
 .fav-btn { background: var(--orange); color: #fff; border: none; padding: 7px 13px; border-radius: 999px; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
 
@@ -44,44 +43,43 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
 .tab.on.c3 { background: var(--panel);  color: #fff; border-color: var(--panel); }
 .tdot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 3px; }
 
-/* FAV PANEL */
+/* ── FAV PANEL ── */
 #fav-panel {
   display: none; position: fixed; z-index: 99;
-  left: 12px; right: 12px;
   background: var(--off-black); border: 1px solid var(--orange);
-  border-radius: 12px; padding: 12px; overflow-y: auto; max-height: 280px;
+  border-radius: 12px; padding: 12px; overflow-y: auto;
+  /* Mobile: full width */
+  left: 12px; right: 12px; max-height: 280px;
+}
+/* Desktop: compact, right-aligned under button */
+@media (min-width: 768px) {
+  #fav-panel { left: auto; right: 16px; width: 420px; max-height: 400px; }
 }
 #fav-panel.show { display: block; }
-#fav-panel h2 { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--orange); letter-spacing: 2px; margin-bottom: 8px; }
-.fi {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--card); border-radius: 7px;
-  padding: 8px 10px; margin-bottom: 5px; font-size: 12px;
-}
+.fav-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+#fav-panel h2 { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--orange); letter-spacing: 2px; }
+.fav-close { background: rgba(255,255,255,0.1); border: none; color: var(--white); width: 26px; height: 26px; border-radius: 50%; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.fav-close:hover { background: rgba(255,80,80,0.25); color: #ff7070; }
+
+.fi { display: flex; align-items: center; gap: 8px; background: var(--card); border-radius: 7px; padding: 8px 10px; margin-bottom: 5px; font-size: 12px; }
 .fi-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
 .fi-name { font-weight: 500; flex: 1; min-width: 0; }
-.fi-time { font-size: 10px; color: var(--muted); white-space: nowrap; margin-right: 6px; }
-.fi-rm {
-  width: 26px; height: 26px; border-radius: 50%; border: none;
-  background: rgba(255,80,80,0.15); color: #ff7070;
-  font-size: 14px; cursor: pointer; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'DM Sans', sans-serif;
-}
+.fi-time { font-size: 10px; color: var(--muted); white-space: nowrap; margin-right: 4px; }
+.fi-rm { width: 26px; height: 26px; border-radius: 50%; border: none; background: rgba(255,80,80,0.15); color: #ff7070; font-size: 14px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'DM Sans', sans-serif; }
+.fi-rm:hover { background: rgba(255,80,80,0.35); }
 .fi-empty { color: var(--muted); font-size: 12px; text-align: center; padding: 12px; }
 
-/* GRID WRAPPER — fills remaining screen, scrolls in BOTH directions */
+/* ── GRID AREA ── */
 #grid-wrap {
   position: fixed; left: 0; right: 0; bottom: 0;
-  overflow: scroll; /* both axes, always */
+  overflow: scroll;
   -webkit-overflow-scrolling: touch;
   background: var(--black);
 }
 
-/* Inner grid — sized to content, never constrained */
-#grid-inner { display: inline-flex; flex-direction: column; padding-bottom: 40px; }
+#grid-inner { display: inline-flex; flex-direction: column; padding: 0 16px 60px; min-width: 100%; }
 
-/* Stage header row — sticks to top of grid-wrap while scrolling vertically */
+/* Stage header row — sticks to top while scrolling vertically */
 #stage-row {
   display: flex; position: sticky; top: 0; z-index: 10;
   background: var(--black); border-bottom: 1px solid var(--border);
@@ -94,7 +92,6 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
 .sh2 { color: var(--comedy); border-bottom: 2px solid var(--comedy); }
 .sh3 { color: var(--panel);  border-bottom: 2px solid var(--panel); }
 
-/* Body row */
 #grid-body { display: flex; }
 #time-col { width: 50px; flex-shrink: 0; position: relative; }
 .tl { position: absolute; right: 6px; font-size: 10px; color: var(--muted); transform: translateY(-50%); white-space: nowrap; }
@@ -113,6 +110,11 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
 .ec-name { font-size: 11px; font-weight: 500; color: var(--white); line-height: 1.25; margin-top: 1px; }
 .ec-time { font-size: 9px; color: var(--muted); margin-top: 1px; }
 .ec-heart { position: absolute; top: 4px; right: 5px; font-size: 11px; }
+
+/* Desktop: wider columns */
+@media (min-width: 768px) {
+  #grid-inner { padding: 0 24px 60px; }
+}
 </style>
 </head>
 <body>
@@ -121,9 +123,9 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
   <div class="header-row">
     <div>
       <div class="logo">Good <span>Vibes</span> Only</div>
-      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22 · <span style="color:var(--orange)">v2.1</span></div>
+      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22 · <span style="color:var(--orange)">v2.3</span></div>
     </div>
-    <button class="fav-btn" onclick="toggleFav()">♥ Favoritter (<span id="fc">0</span>)</button>
+    <button class="fav-btn" onclick="toggleFavPanel()">♥ Favoritter (<span id="fc">0</span>)</button>
   </div>
   <div class="tabs" id="stabs">
     <button class="tab ca on" onclick="setStage('all',this)">Alle scener</button>
@@ -143,7 +145,10 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
 </div>
 
 <div id="fav-panel">
-  <h2>♥ Mine favoritter</h2>
+  <div class="fav-header">
+    <h2>♥ Mine favoritter</h2>
+    <button class="fav-close" onclick="toggleFavPanel()" title="Luk">✕</button>
+  </div>
   <div id="fav-list"></div>
 </div>
 
@@ -162,12 +167,12 @@ const SF = localStorage.getItem('gvo-fav');
 const favs = new Set(SF ? JSON.parse(SF).map(Number) : []);
 let cStage = 'all', cType = 'all';
 
-const DAY0 = 600, DAY1 = 1320, PPM = 1.5, CW = 155;
+const DAY0 = 600, DAY1 = 1320, PPM = 1.5;
 const stages = [
-  {n:'Fyrtårnet',    s:'Hovedscene',     c:'sh0'},
-  {n:'Hjerterytmen', s:'Scene',          c:'sh1'},
-  {n:'Solstrålen',   s:'Talks/Podcast',  c:'sh2'},
-  {n:'Dialog Scenen',s:'Panel/Talks',    c:'sh3'},
+  {n:'Fyrtårnet',    s:'Hovedscene',    c:'sh0'},
+  {n:'Hjerterytmen', s:'Scene',         c:'sh1'},
+  {n:'Solstrålen',   s:'Talks/Podcast', c:'sh2'},
+  {n:'Dialog Scenen',s:'Panel/Talks',   c:'sh3'},
 ];
 const TC = {musik:'#E8891A',talk:'#4CAF8A',comedy:'#9B7FD4',panel:'#5B9BD5'};
 const TL = {musik:'Musik',talk:'Talk/Podcast',comedy:'Comedy',panel:'Paneldebat'};
@@ -209,30 +214,29 @@ const evs = [
 
 function ms(m){return `${Math.floor(m/60)}:${String(m%60).padStart(2,'0')}`;}
 function vis(e){
-  const sg = cStage==='all'||e.g===cStage;
-  const ty = cType==='all'?true:cType==='fav'?favs.has(e.id):e.t===cType;
+  const sg=cStage==='all'||e.g===cStage;
+  const ty=cType==='all'?true:cType==='fav'?favs.has(e.id):e.t===cType;
   return sg&&ty;
 }
 
 function saveFav(id){
   if(favs.has(id)) favs.delete(id); else favs.add(id);
   localStorage.setItem('gvo-fav',JSON.stringify([...favs]));
-  document.getElementById('fc').textContent = favs.size;
+  document.getElementById('fc').textContent=favs.size;
   render(); renderFavList();
 }
 
-function toggleFav(){
+function toggleFavPanel(){
   const p=document.getElementById('fav-panel');
   p.classList.toggle('show');
-  localStorage.setItem('gvo-po', p.classList.contains('show'));
+  localStorage.setItem('gvo-po',p.classList.contains('show'));
   positionFavPanel();
   renderFavList();
 }
 
 function positionFavPanel(){
-  const h=document.getElementById('header');
-  const p=document.getElementById('fav-panel');
-  p.style.top = (h.offsetHeight+6)+'px';
+  const h=document.getElementById('header').offsetHeight;
+  document.getElementById('fav-panel').style.top=(h+6)+'px';
 }
 
 function renderFavList(){
@@ -261,16 +265,20 @@ function setType(t,btn){
   render();
 }
 
+function colWidth(){
+  // On desktop use wider columns
+  return window.innerWidth >= 768 ? 200 : 155;
+}
+
 function render(){
+  const CW=colWidth();
   const totalH=(DAY1-DAY0)*PPM;
   const vg=cStage==='all'?[0,1,2,3]:[cStage];
 
-  // Stage headers
   document.getElementById('stage-row').innerHTML=
     '<div class="time-gap"></div>'+
     vg.map(i=>`<div class="sh ${stages[i].c}" style="width:${CW}px">${stages[i].n}<div style="font-size:9px;font-weight:300;text-transform:none;letter-spacing:0;opacity:0.7">${stages[i].s}</div></div>`).join('');
 
-  // Time col
   const tc=document.getElementById('time-col');
   tc.style.height=totalH+'px';
   tc.innerHTML=Array.from({length:13},(_,i)=>{
@@ -278,25 +286,22 @@ function render(){
     return `<div class="tl" style="top:${(m-DAY0)*PPM}px">${ms(m)}</div>`;
   }).join('');
 
-  // Stage cols
   const cols=document.getElementById('cols');
   cols.innerHTML='';
   vg.forEach(si=>{
     const col=document.createElement('div');
     col.className='stage-col';
     col.style.cssText=`width:${CW}px;height:${totalH}px`;
-    // hour lines
     for(let m=DAY0;m<=DAY1;m+=60){
       const hl=document.createElement('div');
       hl.className='hl';
       hl.style.top=((m-DAY0)*PPM)+'px';
       col.appendChild(hl);
     }
-    // events
     evs.filter(e=>e.g===si).forEach(e=>{
       const top=(e.sM-DAY0)*PPM;
       const h=Math.max((e.eM-e.sM)*PPM-4,30);
-      const f=favs.has(e.id), v=vis(e);
+      const f=favs.has(e.id),v=vis(e);
       const card=document.createElement('div');
       card.className=`ec${f?' fav':''}${!v?' hide':''}`;
       card.style.cssText=`top:${top}px;height:${h}px;--lc:${TC[e.t]}`;
@@ -313,7 +318,7 @@ function setGridTop(){
   document.getElementById('grid-wrap').style.top=h+'px';
 }
 
-window.addEventListener('resize',()=>{setGridTop();positionFavPanel();});
+window.addEventListener('resize',()=>{setGridTop();positionFavPanel();render();});
 setGridTop();
 render();
 renderFavList();
