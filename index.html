@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- VERSION 2.3 — desktop layout fix + lukke-kryds på favoritpanel -->
+<!-- VERSION 2.6 — fuld synlighed af kort i højre side -->
 <html lang="da">
 <head>
 <meta charset="UTF-8">
@@ -34,39 +34,46 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
 
 .tabs { display: flex; gap: 5px; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; margin-bottom: 4px; }
 .tabs::-webkit-scrollbar { display: none; }
-.tab { padding: 4px 11px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 11px; cursor: pointer; white-space: nowrap; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
-.tab.on { font-weight: 500; }
-.tab.on.ca { background: var(--white); color: var(--black); border-color: var(--white); }
-.tab.on.c0 { background: var(--musik);  color: #fff; border-color: var(--musik); }
-.tab.on.c1 { background: var(--talk);   color: #fff; border-color: var(--talk); }
-.tab.on.c2 { background: var(--comedy); color: #fff; border-color: var(--comedy); }
-.tab.on.c3 { background: var(--panel);  color: #fff; border-color: var(--panel); }
-.tdot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 3px; }
+.tab { padding: 4px 11px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 11px; cursor: pointer; white-space: nowrap; flex-shrink: 0; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+
+/* Scene tabs */
+.tab.on.ca  { background: var(--white);   color: var(--black); border-color: var(--white);   font-weight: 500; }
+.tab.on.c0  { background: var(--musik);   color: #fff;         border-color: var(--musik);   font-weight: 500; }
+.tab.on.c1  { background: var(--talk);    color: #fff;         border-color: var(--talk);    font-weight: 500; }
+.tab.on.c2  { background: var(--comedy);  color: #fff;         border-color: var(--comedy);  font-weight: 500; }
+.tab.on.c3  { background: var(--panel);   color: #fff;         border-color: var(--panel);   font-weight: 500; }
+
+/* Type tabs — same style */
+.tab.on.ta  { background: var(--white);   color: var(--black); border-color: var(--white);   font-weight: 500; }
+.tab.on.tm  { background: var(--musik);   color: #fff;         border-color: var(--musik);   font-weight: 500; }
+.tab.on.tt  { background: var(--talk);    color: #fff;         border-color: var(--talk);    font-weight: 500; }
+.tab.on.tc  { background: var(--comedy);  color: #fff;         border-color: var(--comedy);  font-weight: 500; }
+.tab.on.tp  { background: var(--panel);   color: #fff;         border-color: var(--panel);   font-weight: 500; }
+.tab.on.tf  { background: var(--orange);  color: #fff;         border-color: var(--orange);  font-weight: 500; }
+
+.tdot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 3px; vertical-align: middle; }
 
 /* ── FAV PANEL ── */
 #fav-panel {
   display: none; position: fixed; z-index: 99;
   background: var(--off-black); border: 1px solid var(--orange);
   border-radius: 12px; padding: 12px; overflow-y: auto;
-  /* Mobile: full width */
   left: 12px; right: 12px; max-height: 280px;
 }
-/* Desktop: compact, right-aligned under button */
 @media (min-width: 768px) {
-  #fav-panel { left: auto; right: 16px; width: 420px; max-height: 400px; }
+  #fav-panel { left: auto; right: 16px; width: 380px; max-height: 420px; }
 }
 #fav-panel.show { display: block; }
 .fav-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 #fav-panel h2 { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--orange); letter-spacing: 2px; }
-.fav-close { background: rgba(255,255,255,0.1); border: none; color: var(--white); width: 26px; height: 26px; border-radius: 50%; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.fav-close { background: rgba(255,255,255,0.1); border: none; color: var(--white); width: 26px; height: 26px; border-radius: 50%; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
 .fav-close:hover { background: rgba(255,80,80,0.25); color: #ff7070; }
-
 .fi { display: flex; align-items: center; gap: 8px; background: var(--card); border-radius: 7px; padding: 8px 10px; margin-bottom: 5px; font-size: 12px; }
 .fi-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
 .fi-name { font-weight: 500; flex: 1; min-width: 0; }
-.fi-time { font-size: 10px; color: var(--muted); white-space: nowrap; margin-right: 4px; }
-.fi-rm { width: 26px; height: 26px; border-radius: 50%; border: none; background: rgba(255,80,80,0.15); color: #ff7070; font-size: 14px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'DM Sans', sans-serif; }
-.fi-rm:hover { background: rgba(255,80,80,0.35); }
+.fi-time { font-size: 10px; color: var(--muted); white-space: nowrap; margin-right: 4px; text-align: right; line-height: 1.4; }
+.fi-rm { width: 26px; height: 26px; border-radius: 50%; border: none; background: rgba(255,80,80,0.2); color: #ff7070; font-size: 13px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.fi-rm:hover { background: rgba(255,80,80,0.4); }
 .fi-empty { color: var(--muted); font-size: 12px; text-align: center; padding: 12px; }
 
 /* ── GRID AREA ── */
@@ -77,25 +84,31 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
   background: var(--black);
 }
 
-#grid-inner { display: inline-flex; flex-direction: column; padding: 0 16px 60px; min-width: 100%; }
+/* grid-inner stretches to full width of grid-wrap */
+#grid-inner {
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+  width: max-content;
+  padding: 0 24px 60px;
+}
 
-/* Stage header row — sticks to top while scrolling vertically */
 #stage-row {
   display: flex; position: sticky; top: 0; z-index: 10;
   background: var(--black); border-bottom: 1px solid var(--border);
   padding: 6px 0 4px;
 }
+
+#grid-body { display: flex; padding-top: 16px; }
 .time-gap { width: 50px; flex-shrink: 0; }
-.sh { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 1px; text-align: center; padding: 4px 4px 3px; flex-shrink: 0; }
+.sh { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 1px; text-align: center; padding: 4px 4px 3px; }
 .sh0 { color: var(--musik);  border-bottom: 2px solid var(--musik); }
 .sh1 { color: var(--talk);   border-bottom: 2px solid var(--talk); }
 .sh2 { color: var(--comedy); border-bottom: 2px solid var(--comedy); }
 .sh3 { color: var(--panel);  border-bottom: 2px solid var(--panel); }
-
-#grid-body { display: flex; }
 #time-col { width: 50px; flex-shrink: 0; position: relative; }
 .tl { position: absolute; right: 6px; font-size: 10px; color: var(--muted); transform: translateY(-50%); white-space: nowrap; }
-.stage-col { flex-shrink: 0; position: relative; }
+.stage-col { position: relative; } /* width set dynamically */
 .hl { position: absolute; left: 0; right: 0; border-top: 1px solid rgba(255,255,255,0.04); pointer-events: none; }
 
 .ec {
@@ -103,6 +116,7 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
   background: var(--card); border: 1px solid var(--border);
   border-left: 3px solid var(--lc, #555);
   border-radius: 7px; padding: 5px 7px; overflow: hidden; cursor: pointer;
+  transition: opacity 0.15s;
 }
 .ec.fav { border-color: var(--orange); border-left-color: var(--orange); background: rgba(232,137,26,0.1); }
 .ec.hide { opacity: 0.06; pointer-events: none; }
@@ -110,11 +124,6 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
 .ec-name { font-size: 11px; font-weight: 500; color: var(--white); line-height: 1.25; margin-top: 1px; }
 .ec-time { font-size: 9px; color: var(--muted); margin-top: 1px; }
 .ec-heart { position: absolute; top: 4px; right: 5px; font-size: 11px; }
-
-/* Desktop: wider columns */
-@media (min-width: 768px) {
-  #grid-inner { padding: 0 24px 60px; }
-}
 </style>
 </head>
 <body>
@@ -123,31 +132,31 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
   <div class="header-row">
     <div>
       <div class="logo">Good <span>Vibes</span> Only</div>
-      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22 · <span style="color:var(--orange)">v2.3</span></div>
+      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22 · <span style="color:var(--orange)">v2.6</span></div>
     </div>
     <button class="fav-btn" onclick="toggleFavPanel()">♥ Favoritter (<span id="fc">0</span>)</button>
   </div>
   <div class="tabs" id="stabs">
     <button class="tab ca on" onclick="setStage('all',this)">Alle scener</button>
-    <button class="tab c0"    onclick="setStage(0,this)">🎵 Fyrtårnet</button>
-    <button class="tab c1"    onclick="setStage(1,this)">🎸 Hjerterytmen</button>
-    <button class="tab c2"    onclick="setStage(2,this)">🎤 Solstrålen</button>
-    <button class="tab c3"    onclick="setStage(3,this)">💬 Dialog Scenen</button>
+    <button class="tab c0"   onclick="setStage(0,this)">🎵 Fyrtårnet</button>
+    <button class="tab c1"   onclick="setStage(1,this)">🎸 Hjerterytmen</button>
+    <button class="tab c2"   onclick="setStage(2,this)">🎤 Solstrålen</button>
+    <button class="tab c3"   onclick="setStage(3,this)">💬 Dialog Scenen</button>
   </div>
   <div class="tabs" id="ttabs">
-    <button class="tab ca on" onclick="setType('all',this)">Alle typer</button>
-    <button class="tab" onclick="setType('musik',this)"><span class="tdot" style="background:var(--musik)"></span>Musik</button>
-    <button class="tab" onclick="setType('talk',this)"><span class="tdot" style="background:var(--talk)"></span>Talk</button>
-    <button class="tab" onclick="setType('comedy',this)"><span class="tdot" style="background:var(--comedy)"></span>Comedy</button>
-    <button class="tab" onclick="setType('panel',this)"><span class="tdot" style="background:var(--panel)"></span>Panel</button>
-    <button class="tab" onclick="setType('fav',this)">⭐ Favoritter</button>
+    <button class="tab ta on" onclick="setType('all',this)">Alle typer</button>
+    <button class="tab tm"   onclick="setType('musik',this)"><span class="tdot" style="background:var(--musik)"></span>Musik</button>
+    <button class="tab tt"   onclick="setType('talk',this)"><span class="tdot" style="background:var(--talk)"></span>Talk</button>
+    <button class="tab tc"   onclick="setType('comedy',this)"><span class="tdot" style="background:var(--comedy)"></span>Comedy</button>
+    <button class="tab tp"   onclick="setType('panel',this)"><span class="tdot" style="background:var(--panel)"></span>Panel</button>
+    <button class="tab tf"   onclick="setType('fav',this)">⭐ Favoritter</button>
   </div>
 </div>
 
 <div id="fav-panel">
   <div class="fav-header">
     <h2>♥ Mine favoritter</h2>
-    <button class="fav-close" onclick="toggleFavPanel()" title="Luk">✕</button>
+    <button class="fav-close" onclick="toggleFavPanel()">✕</button>
   </div>
   <div id="fav-list"></div>
 </div>
@@ -167,17 +176,17 @@ const SF = localStorage.getItem('gvo-fav');
 const favs = new Set(SF ? JSON.parse(SF).map(Number) : []);
 let cStage = 'all', cType = 'all';
 
-const DAY0 = 600, DAY1 = 1320, PPM = 1.5;
-const stages = [
+const DAY0=600, DAY1=1320, PPM=1.5, TIME_W=50;
+const stages=[
   {n:'Fyrtårnet',    s:'Hovedscene',    c:'sh0'},
   {n:'Hjerterytmen', s:'Scene',         c:'sh1'},
   {n:'Solstrålen',   s:'Talks/Podcast', c:'sh2'},
   {n:'Dialog Scenen',s:'Panel/Talks',   c:'sh3'},
 ];
-const TC = {musik:'#E8891A',talk:'#4CAF8A',comedy:'#9B7FD4',panel:'#5B9BD5'};
-const TL = {musik:'Musik',talk:'Talk/Podcast',comedy:'Comedy',panel:'Paneldebat'};
+const TC={musik:'#E8891A',talk:'#4CAF8A',comedy:'#9B7FD4',panel:'#5B9BD5'};
+const TL={musik:'Musik',talk:'Talk/Podcast',comedy:'Comedy',panel:'Paneldebat'};
 
-const evs = [
+const evs=[
   {id:1, g:0,sM:690, eM:720, t:'musik',n:'Bifald',           ti:'11:30–12:00'},
   {id:2, g:0,sM:735, eM:780, t:'musik',n:'Dahlin',           ti:'12:15–13:00'},
   {id:3, g:0,sM:825, eM:870, t:'musik',n:'Teka',             ti:'13:45–14:30'},
@@ -201,15 +210,15 @@ const evs = [
   {id:21,g:2,sM:1020,eM:1070,t:'talk',  n:'Lars Thiesgaard',              ti:'17:00–17:50'},
   {id:22,g:2,sM:1080,eM:1140,t:'panel', n:'Paneldebat del 1',             ti:'18:00–19:00'},
   {id:23,g:2,sM:1200,eM:1260,t:'panel', n:'Paneldebat del 2',             ti:'20:00–21:00'},
-  {id:24,g:3,sM:600, eM:645, t:'talk', n:'Heart Songs',         ti:'10:00–10:45'},
-  {id:25,g:3,sM:660, eM:715, t:'talk', n:'ADHD & Autisme',       ti:'11:00–11:55'},
-  {id:26,g:3,sM:780, eM:825, t:'talk', n:'Bryd tabuet',          ti:'13:00–13:45'},
-  {id:27,g:3,sM:825, eM:870, t:'talk', n:'Bryd tabuet – del 2',  ti:'13:45–14:30'},
-  {id:28,g:3,sM:870, eM:930, t:'talk', n:'Den Gode Gerning',     ti:'14:30–15:30'},
-  {id:29,g:3,sM:960, eM:1010,t:'talk', n:'Dr. Tommy Pang',       ti:'16:00–16:50'},
-  {id:30,g:3,sM:1020,eM:1065,t:'talk', n:'Samtaler om livet',    ti:'17:00–17:45'},
-  {id:31,g:3,sM:1080,eM:1140,t:'panel',n:'Paneldebat del 1',     ti:'18:00–19:00'},
-  {id:32,g:3,sM:1200,eM:1260,t:'panel',n:'Paneldebat del 2',     ti:'20:00–21:00'},
+  {id:24,g:3,sM:600, eM:645, t:'talk', n:'Heart Songs',        ti:'10:00–10:45'},
+  {id:25,g:3,sM:660, eM:715, t:'talk', n:'ADHD & Autisme',      ti:'11:00–11:55'},
+  {id:26,g:3,sM:780, eM:825, t:'talk', n:'Bryd tabuet',         ti:'13:00–13:45'},
+  {id:27,g:3,sM:825, eM:870, t:'talk', n:'Bryd tabuet – del 2', ti:'13:45–14:30'},
+  {id:28,g:3,sM:870, eM:930, t:'talk', n:'Den Gode Gerning',    ti:'14:30–15:30'},
+  {id:29,g:3,sM:960, eM:1010,t:'talk', n:'Dr. Tommy Pang',      ti:'16:00–16:50'},
+  {id:30,g:3,sM:1020,eM:1065,t:'talk', n:'Samtaler om livet',   ti:'17:00–17:45'},
+  {id:31,g:3,sM:1080,eM:1140,t:'panel',n:'Paneldebat del 1',    ti:'18:00–19:00'},
+  {id:32,g:3,sM:1200,eM:1260,t:'panel',n:'Paneldebat del 2',    ti:'20:00–21:00'},
 ];
 
 function ms(m){return `${Math.floor(m/60)}:${String(m%60).padStart(2,'0')}`;}
@@ -265,20 +274,25 @@ function setType(t,btn){
   render();
 }
 
-function colWidth(){
-  // On desktop use wider columns
-  return window.innerWidth >= 768 ? 200 : 155;
+// Calculate column width to fill available space
+function calcColWidth(numCols){
+  const available = window.innerWidth - TIME_W - 48; // subtract time col + padding
+  const minW = 140;
+  const natural = Math.floor(available / numCols);
+  return Math.max(natural, minW);
 }
 
 function render(){
-  const CW=colWidth();
-  const totalH=(DAY1-DAY0)*PPM;
-  const vg=cStage==='all'?[0,1,2,3]:[cStage];
+  const vg = cStage==='all' ? [0,1,2,3] : [cStage];
+  const CW = calcColWidth(vg.length);
+  const totalH = (DAY1-DAY0)*PPM;
 
-  document.getElementById('stage-row').innerHTML=
-    '<div class="time-gap"></div>'+
+  // Stage headers
+  document.getElementById('stage-row').innerHTML =
+    '<div class="time-gap"></div>' +
     vg.map(i=>`<div class="sh ${stages[i].c}" style="width:${CW}px">${stages[i].n}<div style="font-size:9px;font-weight:300;text-transform:none;letter-spacing:0;opacity:0.7">${stages[i].s}</div></div>`).join('');
 
+  // Time axis
   const tc=document.getElementById('time-col');
   tc.style.height=totalH+'px';
   tc.innerHTML=Array.from({length:13},(_,i)=>{
@@ -286,6 +300,7 @@ function render(){
     return `<div class="tl" style="top:${(m-DAY0)*PPM}px">${ms(m)}</div>`;
   }).join('');
 
+  // Columns
   const cols=document.getElementById('cols');
   cols.innerHTML='';
   vg.forEach(si=>{
@@ -318,7 +333,7 @@ function setGridTop(){
   document.getElementById('grid-wrap').style.top=h+'px';
 }
 
-window.addEventListener('resize',()=>{setGridTop();positionFavPanel();render();});
+window.addEventListener('resize',()=>{ setGridTop(); positionFavPanel(); render(); });
 setGridTop();
 render();
 renderFavList();
