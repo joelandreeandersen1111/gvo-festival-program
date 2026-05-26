@@ -22,55 +22,69 @@
   --panel: #5B9BD5;
   --card-bg: #222220;
   --border: rgba(255,255,255,0.08);
+  --time-col: 56px;
+  --col-min: 180px;
+  --px-per-min: 1.6;
 }
-html { scroll-behavior: smooth; }
-body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.5; min-height: 100vh; }
+html, body { height: 100%; }
+body {
+  background: var(--black); color: var(--white);
+  font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.5;
+  display: flex; flex-direction: column; overflow: hidden;
+}
 
-/* HEADER */
+/* ── STICKY HEADER ── */
 .site-header {
   background: var(--off-black); border-bottom: 1px solid var(--border);
-  padding: 1rem 1.25rem; position: sticky; top: 0; z-index: 100;
+  padding: 0.9rem 1.25rem; flex-shrink: 0; z-index: 200;
 }
-.header-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.header-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 2px; color: var(--white); }
 .logo span { color: var(--orange); }
-.header-meta { font-size: 11px; color: var(--muted); letter-spacing: 0.5px; margin-top: 2px; }
+.header-meta { font-size: 11px; color: var(--muted); margin-top: 1px; }
 .fav-btn {
   background: var(--orange); color: #fff; border: none;
   padding: 7px 14px; border-radius: 999px; white-space: nowrap;
   font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
-  cursor: pointer; flex-shrink: 0;
-  transition: background 0.15s;
+  cursor: pointer; flex-shrink: 0; transition: background 0.15s;
 }
 .fav-btn:hover { background: var(--orange-light); }
 
-/* SCENE TABS */
-.scene-tabs {
-  display: flex; overflow-x: auto; gap: 6px;
-  padding: 10px 0 4px; -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+/* SCENE + TYPE TABS */
+.tabs-row {
+  display: flex; overflow-x: auto; gap: 6px; padding: 8px 0 2px;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
 }
-.scene-tabs::-webkit-scrollbar { display: none; }
-.scene-tab {
-  padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border);
+.tabs-row::-webkit-scrollbar { display: none; }
+.tab-btn {
+  padding: 5px 13px; border-radius: 999px; border: 1px solid var(--border);
   background: transparent; color: var(--muted);
-  font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 12px; cursor: pointer;
   white-space: nowrap; transition: all 0.15s; flex-shrink: 0;
+  display: flex; align-items: center; gap: 5px;
 }
-.scene-tab.active { color: var(--black); border-color: transparent; font-weight: 500; }
-.scene-tab[data-stage="0"].active { background: var(--musik); }
-.scene-tab[data-stage="1"].active { background: var(--talk); }
-.scene-tab[data-stage="2"].active { background: var(--comedy); }
-.scene-tab[data-stage="3"].active { background: var(--panel); }
-.scene-tab[data-stage="all"].active { background: var(--white); }
+.tab-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--white); }
+.tab-btn.active { font-weight: 500; border-color: transparent; }
+.tab-btn.active.all-btn  { background: var(--white); color: var(--black); }
+.tab-btn.active.s0-btn   { background: var(--musik);  color: #fff; }
+.tab-btn.active.s1-btn   { background: var(--talk);   color: #fff; }
+.tab-btn.active.s2-btn   { background: var(--comedy); color: #fff; }
+.tab-btn.active.s3-btn   { background: var(--panel);  color: #fff; }
+.tab-btn.active.type-btn-active { background: var(--white); color: var(--black); }
+.type-dot { width: 7px; height: 7px; border-radius: 50%; }
 
-/* MAIN */
-main { max-width: 700px; margin: 0 auto; padding: 1rem 1rem 5rem; }
+/* ── SCROLLABLE AREA ── */
+/* This wraps everything below the header and scrolls vertically */
+.page-body {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+.page-inner { padding: 1rem 1rem 4rem; max-width: 1400px; margin: 0 auto; }
 
-/* FAV PANEL */
+/* ── FAV PANEL ── */
 .fav-panel {
   background: var(--off-black); border: 1px solid var(--border); border-radius: 12px;
-  padding: 1.25rem; margin-bottom: 1.25rem; display: none;
+  padding: 1.25rem; margin-bottom: 1rem; display: none;
   animation: slideDown 0.2s ease;
 }
 .fav-panel.show { display: block; }
@@ -78,112 +92,71 @@ main { max-width: 700px; margin: 0 auto; padding: 1rem 1rem 5rem; }
 .fav-panel h2 { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; color: var(--orange); margin-bottom: 0.75rem; }
 .fav-list { display: flex; flex-direction: column; gap: 6px; }
 .fav-item {
-  display: grid; grid-template-columns: 10px 1fr auto;
-  align-items: center; gap: 10px;
+  display: flex; align-items: center; gap: 10px;
   padding: 10px 12px; background: var(--card-bg); border-radius: 8px; font-size: 13px;
 }
 .fav-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 .fav-name { font-weight: 500; }
-.fav-meta { font-size: 11px; color: var(--muted); text-align: right; line-height: 1.4; }
-.fav-empty { color: var(--muted); font-size: 14px; text-align: center; padding: 1rem; }
-
-/* TYPE FILTERS */
-.type-filters { display: flex; overflow-x: auto; gap: 6px; padding: 0 0 1rem; scrollbar-width: none; }
-.type-filters::-webkit-scrollbar { display: none; }
-.type-btn {
-  padding: 5px 12px; border-radius: 999px; border: 1px solid var(--border);
-  background: transparent; color: var(--muted);
-  font-family: 'DM Sans', sans-serif; font-size: 12px; cursor: pointer;
-  white-space: nowrap; transition: all 0.15s; flex-shrink: 0;
-  display: flex; align-items: center; gap: 5px;
+.fav-empty { color: var(--muted); font-size: 13px; text-align: center; padding: 1rem; }
+.fav-remove {
+  background: rgba(255,255,255,0.08); border: none; color: #aaa; font-size: 13px;
+  width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  margin-left: auto; transition: background 0.15s, color 0.15s;
 }
-.type-btn.active { background: var(--white); color: var(--black); border-color: var(--white); font-weight: 500; }
-.type-dot { width: 7px; height: 7px; border-radius: 50%; }
+.fav-remove:hover { background: rgba(255,80,80,0.2); color: #ff6060; }
 
-/* PROGRAM LIST — Mobile first: list view */
-.program-list { display: flex; flex-direction: column; gap: 8px; }
-
-.event-card {
-  background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: 12px; padding: 14px 16px;
-  cursor: pointer; transition: transform 0.12s, border-color 0.12s;
-  display: flex; gap: 12px; align-items: flex-start;
-  border-left: 3px solid transparent;
-}
-.event-card:active { transform: scale(0.98); }
-.event-card.favorited { border-color: var(--orange); border-left-color: var(--orange); background: rgba(232,137,26,0.06); }
-
-.ev-time-col { min-width: 52px; text-align: right; padding-top: 2px; }
-.ev-time-start { font-size: 14px; font-weight: 500; color: var(--white); }
-.ev-time-end   { font-size: 11px; color: var(--muted); }
-
-.ev-body { flex: 1; }
-.ev-type { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
-.ev-name { font-size: 15px; font-weight: 500; line-height: 1.3; color: var(--white); }
-.ev-sub  { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
-.ev-stage-badge {
-  display: inline-block; font-size: 10px; padding: 2px 7px;
-  border-radius: 999px; margin-top: 5px;
-  background: rgba(255,255,255,0.07); color: var(--muted);
+/* ── GRID WRAPPER ── */
+/* Scrolls ONLY horizontally; vertical scroll is handled by .page-body */
+.grid-outer {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  /* no overflow-y here — vertical scroll bubbles up to .page-body */
 }
 
-.fav-toggle { font-size: 20px; line-height: 1; padding-top: 2px; flex-shrink: 0; }
-
-/* DESKTOP: back to grid */
-@media (min-width: 900px) {
-  .site-header { padding: 1.25rem 2rem; }
-  .header-top { flex-wrap: wrap; }
-  .scene-tabs { padding: 10px 0 0; }
-
-  main { max-width: 1300px; padding: 2rem 2rem 4rem; }
-
-  .program-list { display: none; }
-  .program-grid-wrap { display: block !important; }
+/* Sticky stage headers row inside horizontal scroll */
+.grid-stage-headers {
+  display: flex;
+  position: sticky; top: 0; z-index: 50;
+  background: var(--black);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px; margin-bottom: 4px;
 }
-
-/* Grid view (desktop only) */
-.program-grid-wrap { display: none; overflow-x: auto; }
-.stage-row-grid {
-  display: grid; grid-template-columns: 70px repeat(4, minmax(220px,1fr));
-  gap: 6px; margin-bottom: 6px; padding-bottom: 8px;
-  border-bottom: 1px solid var(--border); min-width: 960px;
-}
-.stage-lbl {
+.grid-time-spacer { width: var(--time-col); flex-shrink: 0; }
+.grid-stage-head {
   font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 1.5px;
-  text-align: center; padding: 6px 4px;
+  text-align: center; padding: 6px 4px 4px;
+  flex-shrink: 0;
 }
-.sl0 { color: var(--musik); border-bottom: 2px solid var(--musik); }
-.sl1 { color: var(--talk); border-bottom: 2px solid var(--talk); }
-.sl2 { color: var(--comedy); border-bottom: 2px solid var(--comedy); }
-.sl3 { color: var(--panel); border-bottom: 2px solid var(--panel); }
+.gh0 { color: var(--musik); border-bottom: 2px solid var(--musik); }
+.gh1 { color: var(--talk);  border-bottom: 2px solid var(--talk); }
+.gh2 { color: var(--comedy);border-bottom: 2px solid var(--comedy); }
+.gh3 { color: var(--panel); border-bottom: 2px solid var(--panel); }
 
-.grid-timeline {
-  display: grid; grid-template-columns: 70px repeat(4, minmax(220px,1fr));
-  gap: 6px; min-width: 960px;
-}
-.grid-time-col { position: relative; }
-.grid-stage-col { position: relative; }
-.grid-hour-line {
-  position: absolute; left: 0; right: 0;
-  border-top: 1px solid rgba(255,255,255,0.04);
-}
-.grid-time-label {
+/* The actual timeline columns */
+.grid-body { display: flex; }
+.grid-time-axis { width: var(--time-col); flex-shrink: 0; position: relative; }
+.grid-time-lbl {
   position: absolute; right: 8px;
   font-size: 11px; color: var(--muted); white-space: nowrap;
+  transform: translateY(-50%);
 }
+.grid-col { flex-shrink: 0; position: relative; }
+.grid-hour-line { position: absolute; left: 0; right: 0; border-top: 1px solid rgba(255,255,255,0.05); }
 .grid-event {
-  position: absolute; left: 3px; right: 3px;
+  position: absolute; left: 4px; right: 4px;
   background: var(--card-bg); border: 1px solid var(--border);
+  border-left: 3px solid transparent;
   border-radius: 8px; padding: 8px 10px; cursor: pointer;
-  transition: transform 0.12s, border-color 0.12s; overflow: hidden;
+  transition: transform 0.1s, border-color 0.1s; overflow: hidden;
 }
-.grid-event:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.2); }
-.grid-event.favorited { border-color: var(--orange); background: rgba(232,137,26,0.08); }
-.grid-event.g-hidden { opacity: 0.1; pointer-events: none; }
-.grid-ev-type { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.8px; }
-.grid-ev-name { font-size: 12px; font-weight: 500; color: var(--white); line-height: 1.3; margin-top: 2px; }
-.grid-ev-sub  { font-size: 10px; color: var(--muted); margin-top: 2px; line-height: 1.3; }
-.grid-fav-icon { position: absolute; top: 6px; right: 8px; font-size: 13px; }
+.grid-event:hover { transform: translateY(-1px); }
+.grid-event.favorited { border-color: var(--orange); border-left-color: var(--orange); background: rgba(232,137,26,0.08); }
+.grid-event.g-hidden { opacity: 0.08; pointer-events: none; }
+.ge-type { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.8px; }
+.ge-name { font-size: 12px; font-weight: 500; color: var(--white); line-height: 1.3; margin-top: 2px; }
+.ge-time { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.ge-fav  { position: absolute; top: 6px; right: 8px; font-size: 12px; }
 </style>
 </head>
 <body>
@@ -196,36 +169,47 @@ main { max-width: 700px; margin: 0 auto; padding: 1rem 1rem 5rem; }
     </div>
     <button class="fav-btn" onclick="toggleFavPanel()">♥ Favoritter (<span id="fav-count">0</span>)</button>
   </div>
-  <div class="scene-tabs" id="scene-tabs">
-    <button class="scene-tab active" data-stage="all" onclick="setStage('all',this)">Alle scener</button>
-    <button class="scene-tab" data-stage="0" onclick="setStage(0,this)">🎵 Fyrtårnet</button>
-    <button class="scene-tab" data-stage="1" onclick="setStage(1,this)">🎸 Hjerterytmen</button>
-    <button class="scene-tab" data-stage="2" onclick="setStage(2,this)">🎤 Solstrålen</button>
-    <button class="scene-tab" data-stage="3" onclick="setStage(3,this)">💬 Dialog Scenen</button>
+
+  <!-- Scene filter -->
+  <div class="tabs-row" id="scene-tabs">
+    <button class="tab-btn all-btn active" onclick="setStage('all',this)">Alle scener</button>
+    <button class="tab-btn s0-btn" onclick="setStage(0,this)">🎵 Fyrtårnet</button>
+    <button class="tab-btn s1-btn" onclick="setStage(1,this)">🎸 Hjerterytmen</button>
+    <button class="tab-btn s2-btn" onclick="setStage(2,this)">🎤 Solstrålen</button>
+    <button class="tab-btn s3-btn" onclick="setStage(3,this)">💬 Dialog Scenen</button>
+  </div>
+
+  <!-- Type filter -->
+  <div class="tabs-row" id="type-tabs">
+    <button class="tab-btn all-btn active" onclick="setType('all',this)">Alle typer</button>
+    <button class="tab-btn" onclick="setType('musik',this)"><span class="type-dot" style="background:var(--musik)"></span>Musik</button>
+    <button class="tab-btn" onclick="setType('talk',this)"><span class="type-dot" style="background:var(--talk)"></span>Talk & Podcast</button>
+    <button class="tab-btn" onclick="setType('comedy',this)"><span class="type-dot" style="background:var(--comedy)"></span>Comedy</button>
+    <button class="tab-btn" onclick="setType('panel',this)"><span class="type-dot" style="background:var(--panel)"></span>Paneldebat</button>
+    <button class="tab-btn" onclick="setType('favoritter',this)">⭐ Kun favoritter</button>
   </div>
 </header>
 
-<main>
-  <div id="fav-panel" class="fav-panel">
-    <h2>♥ Mine favoritter</h2>
-    <div id="fav-list" class="fav-list"></div>
+<div class="page-body">
+  <div class="page-inner">
+
+    <!-- FAV PANEL -->
+    <div id="fav-panel" class="fav-panel">
+      <h2>♥ Mine favoritter</h2>
+      <div id="fav-list" class="fav-list"></div>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid-outer" id="grid-outer">
+      <div id="grid-stage-headers" class="grid-stage-headers"></div>
+      <div class="grid-body">
+        <div class="grid-time-axis" id="grid-time-axis"></div>
+        <div id="grid-cols" style="display:flex"></div>
+      </div>
+    </div>
+
   </div>
-
-  <div class="type-filters">
-    <button class="type-btn active" onclick="setType('all',this)">Alle</button>
-    <button class="type-btn" onclick="setType('musik',this)"><span class="type-dot" style="background:var(--musik)"></span>Musik</button>
-    <button class="type-btn" onclick="setType('talk',this)"><span class="type-dot" style="background:var(--talk)"></span>Talk & Podcast</button>
-    <button class="type-btn" onclick="setType('comedy',this)"><span class="type-dot" style="background:var(--comedy)"></span>Comedy</button>
-    <button class="type-btn" onclick="setType('panel',this)"><span class="type-dot" style="background:var(--panel)"></span>Paneldebat</button>
-    <button class="type-btn" onclick="setType('favoritter',this)">⭐ Favoritter</button>
-  </div>
-
-  <!-- MOBILE: list view -->
-  <div class="program-list" id="program-list"></div>
-
-  <!-- DESKTOP: grid view -->
-  <div class="program-grid-wrap" id="program-grid"></div>
-</main>
+</div>
 
 <script>
 const savedFavs = localStorage.getItem('gvo-favorites');
@@ -233,11 +217,16 @@ const favorites = new Set(savedFavs ? JSON.parse(savedFavs).map(Number) : []);
 let currentStage = 'all';
 let currentType  = 'all';
 
+const DAY_START  = 600;   // 10:00 in minutes
+const DAY_END    = 1320;  // 22:00
+const PX_PER_MIN = 1.6;
+const COL_W      = 200;   // px per stage column
+
 const stages = [
-  { name:'Fyrtårnet',      sub:'Hovedscene',        cls:'sl0' },
-  { name:'Hjerterytmen',   sub:'Scene',              cls:'sl1' },
-  { name:'Solstrålen',     sub:'Talks & Podcast',    cls:'sl2' },
-  { name:'Dialog Scenen',  sub:'Talks & Paneldebat', cls:'sl3' },
+  { name:'Fyrtårnet',     sub:'Hovedscene',        ghCls:'gh0' },
+  { name:'Hjerterytmen',  sub:'Scene',              ghCls:'gh1' },
+  { name:'Solstrålen',    sub:'Talks & Podcast',    ghCls:'gh2' },
+  { name:'Dialog Scenen', sub:'Talks & Paneldebat', ghCls:'gh3' },
 ];
 
 const typeColor = { musik:'#E8891A', talk:'#4CAF8A', comedy:'#9B7FD4', panel:'#5B9BD5' };
@@ -245,55 +234,52 @@ const typeLabel = { musik:'Musik', talk:'Talk / Podcast', comedy:'Comedy', panel
 
 const events = [
   // FYRTÅRNET
-  { id:1,  stage:0, sM:690,  eM:720,  type:'musik', name:'Bifald',           sub:'Danmark · Intro set',                                               time:'11:30–12:00' },
-  { id:2,  stage:0, sM:735,  eM:780,  type:'musik', name:'Dahlin',           sub:'Danmark',                                                           time:'12:15–13:00' },
-  { id:3,  stage:0, sM:825,  eM:870,  type:'musik', name:'Teka',             sub:'Frankrig',                                                          time:'13:45–14:30' },
-  { id:4,  stage:0, sM:930,  eM:975,  type:'musik', name:'Chris de Sarandy', sub:'Tyskland',                                                          time:'15:30–16:15' },
-  { id:5,  stage:0, sM:1035, eM:1080, type:'musik', name:'Mae Hill',         sub:'Storbritannien',                                                    time:'17:15–18:00' },
-  { id:6,  stage:0, sM:1140, eM:1185, type:'musik', name:'Jourdan Blue',     sub:'USA',                                                               time:'19:00–19:45' },
-  { id:7,  stage:0, sM:1260, eM:1305, type:'musik', name:'Sonny Tennet',     sub:'Storbritannien · Headliner',                                        time:'21:00–21:45' },
+  { id:1,  stage:0, sM:690,  eM:720,  type:'musik', name:'Bifald',           sub:'Danmark · Intro set',                    time:'11:30–12:00' },
+  { id:2,  stage:0, sM:735,  eM:780,  type:'musik', name:'Dahlin',           sub:'Danmark',                                time:'12:15–13:00' },
+  { id:3,  stage:0, sM:825,  eM:870,  type:'musik', name:'Teka',             sub:'Frankrig',                               time:'13:45–14:30' },
+  { id:4,  stage:0, sM:930,  eM:975,  type:'musik', name:'Chris de Sarandy', sub:'Tyskland',                               time:'15:30–16:15' },
+  { id:5,  stage:0, sM:1035, eM:1080, type:'musik', name:'Mae Hill',         sub:'Storbritannien',                         time:'17:15–18:00' },
+  { id:6,  stage:0, sM:1140, eM:1185, type:'musik', name:'Jourdan Blue',     sub:'USA',                                    time:'19:00–19:45' },
+  { id:7,  stage:0, sM:1260, eM:1305, type:'musik', name:'Sonny Tennet',     sub:'Storbritannien · Headliner',             time:'21:00–21:45' },
   // HJERTERYTMEN
-  { id:8,  stage:1, sM:600,  eM:645,  type:'musik', name:'Scarlett',         sub:'Kina · Erhu',                                                       time:'10:00–10:45' },
-  { id:9,  stage:1, sM:660,  eM:705,  type:'musik', name:'Trainman Blues',   sub:'Irland',                                                            time:'11:00–11:45' },
-  { id:10, stage:1, sM:780,  eM:825,  type:'musik', name:'Joje',             sub:'Sydkorea',                                                          time:'13:00–13:45' },
-  { id:11, stage:1, sM:885,  eM:930,  type:'musik', name:"John D'Ambrosio",  sub:'Storbritannien',                                                    time:'14:45–15:30' },
-  { id:12, stage:1, sM:975,  eM:1020, type:'musik', name:'Bjarne',           sub:'Tyskland',                                                          time:'16:15–17:00' },
-  { id:13, stage:1, sM:1080, eM:1140, type:'panel', name:'Paneldebat del 1', sub:'Hjerterytmen · Introduktion og samtale',                            time:'18:00–19:00' },
-  { id:14, stage:1, sM:1200, eM:1260, type:'panel', name:'Paneldebat del 2', sub:'Hjerterytmen · Spørgsmål fra publikum',                             time:'20:00–21:00' },
+  { id:8,  stage:1, sM:600,  eM:645,  type:'musik', name:'Scarlett',         sub:'Kina · Erhu',                            time:'10:00–10:45' },
+  { id:9,  stage:1, sM:660,  eM:705,  type:'musik', name:'Trainman Blues',   sub:'Irland',                                 time:'11:00–11:45' },
+  { id:10, stage:1, sM:780,  eM:825,  type:'musik', name:'Joje',             sub:'Sydkorea',                               time:'13:00–13:45' },
+  { id:11, stage:1, sM:885,  eM:930,  type:'musik', name:"John D'Ambrosio",  sub:'Storbritannien',                         time:'14:45–15:30' },
+  { id:12, stage:1, sM:975,  eM:1020, type:'musik', name:'Bjarne',           sub:'Tyskland',                               time:'16:15–17:00' },
+  { id:13, stage:1, sM:1080, eM:1140, type:'panel', name:'Paneldebat del 1', sub:'Hjerterytmen · Introduktion og samtale', time:'18:00–19:00' },
+  { id:14, stage:1, sM:1200, eM:1260, type:'panel', name:'Paneldebat del 2', sub:'Hjerterytmen · Spørgsmål fra publikum',  time:'20:00–21:00' },
   // SOLSTRÅLEN
-  { id:15, stage:2, sM:600,  eM:655,  type:'talk',   name:'Når livet ikke er sort/hvidt', sub:'Vært: Emilia Flora · Mathias Holsaae, Patrick Simiglai m.fl.', time:'10:00–10:55' },
-  { id:16, stage:2, sM:660,  eM:715,  type:'talk',   name:'Talk om alkohol',              sub:'Alkoholfri Brødre · Umut Sakarya, Marie Brixtofte & Helle Lindgaard', time:'11:00–11:55' },
-  { id:17, stage:2, sM:780,  eM:840,  type:'comedy', name:'Comedy Show',                  sub:'Anders Stjernholm · Mia Westergaard · Mikkel Bech · Henrik Danielsen', time:'13:00–14:00' },
-  { id:18, stage:2, sM:825,  eM:870,  type:'talk',   name:'Ludvigs Podcast',              sub:'Vært: Ludvig Larsen · Nicklas Holst, Michelle Opiola & Carsten Juul', time:'13:45–14:30' },
-  { id:19, stage:2, sM:880,  eM:930,  type:'talk',   name:'LET LIVET',                    sub:'Sara Maria Franch-Mærkedahl & Psykolog Pia Callesen',                  time:'14:40–15:30' },
-  { id:20, stage:2, sM:960,  eM:1010, type:'talk',   name:'Talk & Q&A',                   sub:'Chris de Sarandy · Agnes Marie Frey, Mathias Vinsten Munk & Anders Sørensen', time:'16:00–16:50' },
-  { id:21, stage:2, sM:1020, eM:1070, type:'talk',   name:'Lars Thiesgaard',              sub:'"Manden med de 1000 stemmer" · Stemmens kraft og identitet',           time:'17:00–17:50' },
-  { id:22, stage:2, sM:1080, eM:1140, type:'panel',  name:'Paneldebat del 1',             sub:'Solstrålen · Introduktion og samtale',                                 time:'18:00–19:00' },
-  { id:23, stage:2, sM:1200, eM:1260, type:'panel',  name:'Paneldebat del 2',             sub:'Solstrålen · Spørgsmål fra publikum',                                  time:'20:00–21:00' },
+  { id:15, stage:2, sM:600,  eM:655,  type:'talk',   name:'Når livet ikke er sort/hvidt', sub:'Vært: Emilia Flora · Mathias Holsaae m.fl.',                   time:'10:00–10:55' },
+  { id:16, stage:2, sM:660,  eM:715,  type:'talk',   name:'Talk om alkohol',              sub:'Alkoholfri Brødre · Umut Sakarya, Marie Brixtofte m.fl.',       time:'11:00–11:55' },
+  { id:17, stage:2, sM:780,  eM:840,  type:'comedy', name:'Comedy Show',                  sub:'Anders Stjernholm · Mia Westergaard · Mikkel Bech m.fl.',       time:'13:00–14:00' },
+  { id:18, stage:2, sM:825,  eM:870,  type:'talk',   name:'Ludvigs Podcast',              sub:'Vært: Ludvig Larsen · Nicklas Holst, Michelle Opiola m.fl.',    time:'13:45–14:30' },
+  { id:19, stage:2, sM:880,  eM:930,  type:'talk',   name:'LET LIVET',                    sub:'Sara Maria Franch-Mærkedahl & Psykolog Pia Callesen',           time:'14:40–15:30' },
+  { id:20, stage:2, sM:960,  eM:1010, type:'talk',   name:'Talk & Q&A',                   sub:'Chris de Sarandy · Agnes Marie Frey m.fl.',                     time:'16:00–16:50' },
+  { id:21, stage:2, sM:1020, eM:1070, type:'talk',   name:'Lars Thiesgaard',              sub:'"Manden med de 1000 stemmer"',                                  time:'17:00–17:50' },
+  { id:22, stage:2, sM:1080, eM:1140, type:'panel',  name:'Paneldebat del 1',             sub:'Solstrålen · Introduktion og samtale',                          time:'18:00–19:00' },
+  { id:23, stage:2, sM:1200, eM:1260, type:'panel',  name:'Paneldebat del 2',             sub:'Solstrålen · Spørgsmål fra publikum',                           time:'20:00–21:00' },
   // DIALOG SCENEN
-  { id:24, stage:3, sM:600,  eM:645,  type:'talk',  name:'Heart Songs',            sub:'Anne Ryom · Interaktivt foredrag med hjertepauser',                          time:'10:00–10:45' },
-  { id:25, stage:3, sM:660,  eM:715,  type:'talk',  name:'ADHD & Autisme',         sub:'Podcast live · Vært: Alvin Sareen · Sonja Lovdal',                           time:'11:00–11:55' },
-  { id:26, stage:3, sM:780,  eM:825,  type:'talk',  name:'Bryd tabuet',            sub:'Niklas Hindsberg · Malika Olsen · En ungdom i krise',                        time:'13:00–13:45' },
-  { id:27, stage:3, sM:825,  eM:870,  type:'talk',  name:'Bryd tabuet – del 2',    sub:'Niklas Hindsberg · Stille spørgsmål',                                        time:'13:45–14:30' },
-  { id:28, stage:3, sM:870,  eM:930,  type:'talk',  name:'Den Gode Gerning',       sub:'Pelle Hvenegaard',                                                           time:'14:30–15:30' },
-  { id:29, stage:3, sM:960,  eM:1010, type:'talk',  name:'Dr. Tommy Pang',         sub:'Hjerneforsker · Motivation, mental sundhed & hjernens sundhed',              time:'16:00–16:50' },
-  { id:30, stage:3, sM:1020, eM:1065, type:'talk',  name:'Samtaler om livet',      sub:'Emilia Flora · Christoffer Hansen, Michelle Opiola & Birgit Bundesen',       time:'17:00–17:45' },
-  { id:31, stage:3, sM:1080, eM:1140, type:'panel', name:'Paneldebat del 1',       sub:'Dialog Scenen · Introduktion og samtale',                                    time:'18:00–19:00' },
-  { id:32, stage:3, sM:1200, eM:1260, type:'panel', name:'Paneldebat del 2',       sub:'Dialog Scenen · Spørgsmål fra publikum',                                     time:'20:00–21:00' },
+  { id:24, stage:3, sM:600,  eM:645,  type:'talk',  name:'Heart Songs',         sub:'Anne Ryom · Interaktivt foredrag',                         time:'10:00–10:45' },
+  { id:25, stage:3, sM:660,  eM:715,  type:'talk',  name:'ADHD & Autisme',      sub:'Podcast live · Vært: Alvin Sareen · Sonja Lovdal',          time:'11:00–11:55' },
+  { id:26, stage:3, sM:780,  eM:825,  type:'talk',  name:'Bryd tabuet',         sub:'Niklas Hindsberg · Malika Olsen',                           time:'13:00–13:45' },
+  { id:27, stage:3, sM:825,  eM:870,  type:'talk',  name:'Bryd tabuet – del 2', sub:'Niklas Hindsberg · Stille spørgsmål',                       time:'13:45–14:30' },
+  { id:28, stage:3, sM:870,  eM:930,  type:'talk',  name:'Den Gode Gerning',    sub:'Pelle Hvenegaard',                                          time:'14:30–15:30' },
+  { id:29, stage:3, sM:960,  eM:1010, type:'talk',  name:'Dr. Tommy Pang',      sub:'Hjerneforsker · Mental sundhed & hjernens sundhed',          time:'16:00–16:50' },
+  { id:30, stage:3, sM:1020, eM:1065, type:'talk',  name:'Samtaler om livet',   sub:'Emilia Flora · Christoffer Hansen, Michelle Opiola m.fl.',   time:'17:00–17:45' },
+  { id:31, stage:3, sM:1080, eM:1140, type:'panel', name:'Paneldebat del 1',    sub:'Dialog Scenen · Introduktion og samtale',                    time:'18:00–19:00' },
+  { id:32, stage:3, sM:1200, eM:1260, type:'panel', name:'Paneldebat del 2',    sub:'Dialog Scenen · Spørgsmål fra publikum',                     time:'20:00–21:00' },
 ];
 
 function minToStr(m) {
-  const h = Math.floor(m/60), mm = m%60;
-  return `${h}:${mm.toString().padStart(2,'0')}`;
+  return `${Math.floor(m/60)}:${String(m%60).padStart(2,'0')}`;
 }
 
 function isVisible(ev) {
   const stageOk = currentStage === 'all' || ev.stage === currentStage;
-  const typeOk  = currentType === 'all'
-    ? true
-    : currentType === 'favoritter'
-      ? favorites.has(ev.id)
-      : ev.type === currentType;
+  const typeOk  = currentType === 'all' ? true
+    : currentType === 'favoritter' ? favorites.has(ev.id)
+    : ev.type === currentType;
   return stageOk && typeOk;
 }
 
@@ -302,7 +288,6 @@ function toggleFav(id) {
   else favorites.add(id);
   localStorage.setItem('gvo-favorites', JSON.stringify([...favorites]));
   document.getElementById('fav-count').textContent = favorites.size;
-  renderList();
   renderGrid();
   renderFavList();
 }
@@ -324,130 +309,97 @@ function renderFavList() {
   list.innerHTML = favEvs.map(ev => `
     <div class="fav-item">
       <div class="fav-dot" style="background:${typeColor[ev.type]}"></div>
-      <div>
+      <div style="flex:1">
         <div class="fav-name">${ev.name}</div>
         <div style="font-size:11px;color:#888">${ev.time} · ${stages[ev.stage].name}</div>
       </div>
-      <div class="fav-meta">${typeLabel[ev.type]}</div>
+      <div style="font-size:11px;color:var(--muted);margin-right:8px">${typeLabel[ev.type]}</div>
+      <button class="fav-remove" onclick="toggleFav(${ev.id})" title="Fjern fra favoritter">✕</button>
     </div>`).join('');
 }
 
 function setStage(s, btn) {
   currentStage = s === 'all' ? 'all' : Number(s);
-  document.querySelectorAll('.scene-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#scene-tabs .tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  renderList();
   renderGrid();
 }
 
 function setType(t, btn) {
   currentType = t;
-  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#type-tabs .tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  renderList();
   renderGrid();
 }
 
-/* ---- MOBILE LIST ---- */
-function renderList() {
-  const container = document.getElementById('program-list');
-  const visible = events.filter(isVisible).sort((a,b) => a.sM - b.sM);
-
-  if (!visible.length) {
-    container.innerHTML = '<p style="color:var(--muted);text-align:center;padding:2rem">Ingen events matcher filteret</p>';
-    return;
-  }
-
-  // Group by hour
-  const groups = {};
-  visible.forEach(ev => {
-    const h = Math.floor(ev.sM / 60);
-    if (!groups[h]) groups[h] = [];
-    groups[h].push(ev);
-  });
-
-  let html = '';
-  Object.keys(groups).sort((a,b)=>a-b).forEach(h => {
-    html += `<div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:6px 2px 4px;margin-top:8px">Kl. ${h}:00</div>`;
-    groups[h].forEach(ev => {
-      const fav = favorites.has(ev.id);
-      const col = typeColor[ev.type];
-      html += `
-        <div class="event-card${fav?' favorited':''}" style="border-left-color:${col}" onclick="toggleFav(${ev.id})">
-          <div class="ev-time-col">
-            <div class="ev-time-start">${ev.time.split('–')[0]}</div>
-            <div class="ev-time-end">${ev.time.split('–')[1]}</div>
-          </div>
-          <div class="ev-body">
-            <div class="ev-type" style="color:${col}">${typeLabel[ev.type]}</div>
-            <div class="ev-name">${ev.name}</div>
-            ${ev.sub ? `<div class="ev-sub">${ev.sub}</div>` : ''}
-            <span class="ev-stage-badge">${stages[ev.stage].name}</span>
-          </div>
-          <div class="fav-toggle">${fav ? '❤️' : '🤍'}</div>
-        </div>`;
-    });
-  });
-
-  container.innerHTML = html;
-}
-
-/* ---- DESKTOP GRID ---- */
-const DAY_START = 600;
-const DAY_END   = 1320;
-const PX_PER_MIN = 1.5;
-
 function renderGrid() {
-  const container = document.getElementById('program-grid');
   const totalH = (DAY_END - DAY_START) * PX_PER_MIN;
 
-  let html = '<div class="stage-row-grid"><div></div>';
-  stages.forEach((s,i) => {
-    html += `<div class="stage-lbl ${s.cls}">${s.name}<br><span style="font-size:10px;font-family:'DM Sans',sans-serif;font-weight:300;text-transform:none;letter-spacing:0.3px">${s.sub}</span></div>`;
-  });
-  html += '</div>';
+  // Which stages to show
+  const visibleStages = currentStage === 'all'
+    ? [0,1,2,3]
+    : [currentStage];
 
-  html += `<div class="grid-timeline">`;
+  // ── Stage header row ──
+  const headersEl = document.getElementById('grid-stage-headers');
+  headersEl.innerHTML = `<div class="grid-time-spacer"></div>` +
+    visibleStages.map(si => `
+      <div class="grid-stage-head ${stages[si].ghCls}" style="width:${COL_W}px">
+        ${stages[si].name}
+        <div style="font-size:10px;font-family:'DM Sans',sans-serif;font-weight:300;text-transform:none;letter-spacing:0.3px;margin-top:1px">${stages[si].sub}</div>
+      </div>`).join('');
 
-  // Time axis
-  html += `<div class="grid-time-col" style="height:${totalH}px">`;
+  // ── Time axis ──
+  const timeEl = document.getElementById('grid-time-axis');
+  timeEl.style.height = totalH + 'px';
+  let timeHtml = '';
   for (let m = DAY_START; m <= DAY_END; m += 60) {
     const top = (m - DAY_START) * PX_PER_MIN;
-    html += `<div class="grid-hour-line" style="top:${top}px"></div>`;
-    html += `<div class="grid-time-label" style="top:${top - 8}px">${minToStr(m)}</div>`;
+    timeHtml += `<div class="grid-time-lbl" style="top:${top}px">${minToStr(m)}</div>`;
   }
-  html += '</div>';
+  timeEl.innerHTML = timeHtml;
 
-  stages.forEach((s, si) => {
-    const stageVisible = currentStage === 'all' || currentStage === si;
-    html += `<div class="grid-stage-col" style="height:${totalH}px">`;
+  // ── Stage columns ──
+  const colsEl = document.getElementById('grid-cols');
+  colsEl.innerHTML = '';
+
+  visibleStages.forEach(si => {
+    const col = document.createElement('div');
+    col.className = 'grid-col';
+    col.style.width  = COL_W + 'px';
+    col.style.height = totalH + 'px';
+
+    // Hour lines
     for (let m = DAY_START; m <= DAY_END; m += 60) {
-      const top = (m - DAY_START) * PX_PER_MIN;
-      html += `<div class="grid-hour-line" style="top:${top}px"></div>`;
+      const line = document.createElement('div');
+      line.className = 'grid-hour-line';
+      line.style.top = ((m - DAY_START) * PX_PER_MIN) + 'px';
+      col.appendChild(line);
     }
-    events.filter(e => e.stage === si).forEach(ev => {
-      const top = (ev.sM - DAY_START) * PX_PER_MIN;
-      const h   = Math.max((ev.eM - ev.sM) * PX_PER_MIN - 4, 36);
-      const vis = isVisible(ev);
-      const fav = favorites.has(ev.id);
-      html += `
-        <div class="grid-event${fav?' favorited':''}${!vis?' g-hidden':''}"
-          style="top:${top}px;height:${h}px" onclick="toggleFav(${ev.id})">
-          <div class="grid-ev-type" style="color:${typeColor[ev.type]}">${typeLabel[ev.type]}</div>
-          <div class="grid-ev-name">${ev.name}</div>
-          <div class="grid-ev-sub">${ev.time}</div>
-          <div class="grid-fav-icon">${fav ? '❤️' : '🤍'}</div>
-        </div>`;
-    });
-    html += '</div>';
-  });
 
-  html += '</div>';
-  container.innerHTML = html;
+    // Events
+    events.filter(e => e.stage === si).forEach(ev => {
+      const top  = (ev.sM - DAY_START) * PX_PER_MIN;
+      const h    = Math.max((ev.eM - ev.sM) * PX_PER_MIN - 4, 36);
+      const vis  = isVisible(ev);
+      const fav  = favorites.has(ev.id);
+      const card = document.createElement('div');
+      card.className = `grid-event${fav?' favorited':''}${!vis?' g-hidden':''}`;
+      card.style.cssText = `top:${top}px;height:${h}px;border-left-color:${typeColor[ev.type]}`;
+      card.innerHTML = `
+        <div class="ge-type" style="color:${typeColor[ev.type]}">${typeLabel[ev.type]}</div>
+        <div class="ge-name">${ev.name}</div>
+        <div class="ge-time">${ev.time}</div>
+        <div class="ge-fav">${fav?'❤️':'🤍'}</div>`;
+      card.addEventListener('click', () => toggleFav(ev.id));
+      col.appendChild(card);
+    });
+
+    colsEl.appendChild(col);
+  });
 }
 
 // Init
-renderList();
 renderGrid();
 renderFavList();
 document.getElementById('fav-count').textContent = favorites.size;
