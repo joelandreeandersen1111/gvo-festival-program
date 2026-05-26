@@ -2,388 +2,321 @@
 <html lang="da">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Program – Good Vibes Only Festival 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --black: #0f0f0f;
-  --off-black: #1a1a18;
-  --orange: #E8891A;
-  --orange-light: #F5A843;
-  --white: #f5f3ee;
-  --muted: #888880;
-  --musik: #E8891A;
-  --talk: #4CAF8A;
-  --comedy: #9B7FD4;
-  --panel: #5B9BD5;
-  --card-bg: #222220;
+  --black: #0f0f0f; --off-black: #1a1a18; --orange: #E8891A;
+  --white: #f5f3ee; --muted: #888880; --card: #222220;
   --border: rgba(255,255,255,0.08);
-  --time-col: 48px;
-  --col-w: 160px;
-  --px-per-min: 1.5;
+  --musik: #E8891A; --talk: #4CAF8A; --comedy: #9B7FD4; --panel: #5B9BD5;
 }
 
-/* Full-height layout so we control all scrolling */
-html, body { height: 100%; overflow: hidden; }
-body {
-  background: var(--black); color: var(--white);
-  font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.5;
-  display: flex; flex-direction: column;
-}
+/* Full screen, no body scroll */
+html, body { height: 100%; width: 100%; overflow: hidden; background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; }
 
-/* ── STICKY HEADER ── */
-.site-header {
+/* HEADER — fixed at top */
+#header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   background: var(--off-black); border-bottom: 1px solid var(--border);
-  padding: 0.75rem 1rem; flex-shrink: 0; z-index: 200;
+  padding: 10px 12px 6px;
 }
-.header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; margin-bottom: 6px; }
-.logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: var(--white); line-height: 1; }
+.logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; }
 .logo span { color: var(--orange); }
-.header-meta { font-size: 10px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
-.fav-btn {
-  background: var(--orange); color: #fff; border: none;
-  padding: 7px 13px; border-radius: 999px; white-space: nowrap;
-  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
-  cursor: pointer; flex-shrink: 0; transition: background 0.15s;
-}
-.fav-btn:hover, .fav-btn:active { background: var(--orange-light); }
+.header-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.meta { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.fav-btn { background: var(--orange); color: #fff; border: none; padding: 7px 13px; border-radius: 999px; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
 
-.tabs-row {
-  display: flex; overflow-x: auto; gap: 5px; padding-bottom: 2px;
-  -webkit-overflow-scrolling: touch; scrollbar-width: none;
-}
-.tabs-row + .tabs-row { margin-top: 5px; }
-.tabs-row::-webkit-scrollbar { display: none; }
-.tab-btn {
-  padding: 4px 12px; border-radius: 999px; border: 1px solid var(--border);
-  background: transparent; color: var(--muted);
-  font-family: 'DM Sans', sans-serif; font-size: 12px; cursor: pointer;
-  white-space: nowrap; flex-shrink: 0; transition: all 0.15s;
-  display: flex; align-items: center; gap: 5px;
-}
-.tab-btn.active { font-weight: 500; border-color: transparent; }
-.tab-btn.active.c-all    { background: var(--white);   color: var(--black); }
-.tab-btn.active.c-s0     { background: var(--musik);   color: #fff; }
-.tab-btn.active.c-s1     { background: var(--talk);    color: #fff; }
-.tab-btn.active.c-s2     { background: var(--comedy);  color: #fff; }
-.tab-btn.active.c-s3     { background: var(--panel);   color: #fff; }
-.type-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.tabs { display: flex; gap: 5px; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; margin-bottom: 4px; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { padding: 4px 11px; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 11px; cursor: pointer; white-space: nowrap; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
+.tab.on { font-weight: 500; }
+.tab.on.ca { background: var(--white); color: var(--black); border-color: var(--white); }
+.tab.on.c0 { background: var(--musik);  color: #fff; border-color: var(--musik); }
+.tab.on.c1 { background: var(--talk);   color: #fff; border-color: var(--talk); }
+.tab.on.c2 { background: var(--comedy); color: #fff; border-color: var(--comedy); }
+.tab.on.c3 { background: var(--panel);  color: #fff; border-color: var(--panel); }
+.tdot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 3px; }
 
-/* ── FAV PANEL (scrolls with content) ── */
-.fav-panel {
-  background: var(--off-black); border: 1px solid var(--border); border-radius: 10px;
-  padding: 1rem; margin: 0.75rem 0.75rem 0; display: none;
-  animation: slideDown 0.18s ease; flex-shrink: 0;
+/* FAV PANEL */
+#fav-panel {
+  display: none; position: fixed; z-index: 99;
+  left: 12px; right: 12px;
+  background: var(--off-black); border: 1px solid var(--orange);
+  border-radius: 12px; padding: 12px; overflow-y: auto; max-height: 280px;
 }
-.fav-panel.show { display: block; }
-@keyframes slideDown { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
-.fav-panel h2 { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 2px; color: var(--orange); margin-bottom: 0.6rem; }
-.fav-list { display: flex; flex-direction: column; gap: 5px; max-height: 220px; overflow-y: auto; }
-.fav-item {
+#fav-panel.show { display: block; }
+#fav-panel h2 { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--orange); letter-spacing: 2px; margin-bottom: 8px; }
+.fi {
   display: flex; align-items: center; gap: 8px;
-  padding: 8px 10px; background: var(--card-bg); border-radius: 7px; font-size: 12px;
+  background: var(--card); border-radius: 7px;
+  padding: 8px 10px; margin-bottom: 5px; font-size: 12px;
 }
-.fav-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-.fav-name { font-weight: 500; flex: 1; }
-.fav-time { font-size: 11px; color: var(--muted); white-space: nowrap; }
-.fav-remove {
-  background: rgba(255,255,255,0.08); border: none; color: #aaa; font-size: 12px;
-  width: 24px; height: 24px; border-radius: 50%; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  transition: background 0.15s, color 0.15s;
+.fi-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.fi-name { font-weight: 500; flex: 1; min-width: 0; }
+.fi-time { font-size: 10px; color: var(--muted); white-space: nowrap; margin-right: 6px; }
+.fi-rm {
+  width: 26px; height: 26px; border-radius: 50%; border: none;
+  background: rgba(255,80,80,0.15); color: #ff7070;
+  font-size: 14px; cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Sans', sans-serif;
 }
-.fav-remove:hover, .fav-remove:active { background: rgba(255,80,80,0.25); color: #ff6060; }
-.fav-empty { color: var(--muted); font-size: 12px; text-align: center; padding: 0.75rem; }
+.fi-empty { color: var(--muted); font-size: 12px; text-align: center; padding: 12px; }
 
-/* ── THE GRID AREA ── */
-/* This is the key: one container that scrolls BOTH ways freely */
-.grid-area {
-  flex: 1;
-  overflow: auto;           /* both axes */
+/* GRID WRAPPER — fills remaining screen, scrolls in BOTH directions */
+#grid-wrap {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  overflow: scroll; /* both axes, always */
   -webkit-overflow-scrolling: touch;
-  position: relative;
-}
-
-/* Stage headers stick to the TOP while scrolling vertically,
-   but move with horizontal scroll naturally */
-.grid-inner {
-  display: inline-flex;     /* shrink-wraps to content width */
-  flex-direction: column;
-  min-width: 100%;
-  padding: 0 0.5rem 2rem;
-}
-
-.stage-headers {
-  display: flex;
-  position: sticky;
-  top: 0;
   background: var(--black);
-  z-index: 10;
+}
+
+/* Inner grid — sized to content, never constrained */
+#grid-inner { display: inline-flex; flex-direction: column; padding-bottom: 40px; }
+
+/* Stage header row — sticks to top of grid-wrap while scrolling vertically */
+#stage-row {
+  display: flex; position: sticky; top: 0; z-index: 10;
+  background: var(--black); border-bottom: 1px solid var(--border);
   padding: 6px 0 4px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 4px;
 }
-.time-spacer { width: var(--time-col); flex-shrink: 0; }
-.stage-head {
-  font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 1.2px;
-  text-align: center; padding: 4px 4px 3px; flex-shrink: 0;
-}
-.sh0 { color: var(--musik);  border-bottom: 2px solid var(--musik);  }
-.sh1 { color: var(--talk);   border-bottom: 2px solid var(--talk);   }
+.time-gap { width: 50px; flex-shrink: 0; }
+.sh { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 1px; text-align: center; padding: 4px 4px 3px; flex-shrink: 0; }
+.sh0 { color: var(--musik);  border-bottom: 2px solid var(--musik); }
+.sh1 { color: var(--talk);   border-bottom: 2px solid var(--talk); }
 .sh2 { color: var(--comedy); border-bottom: 2px solid var(--comedy); }
-.sh3 { color: var(--panel);  border-bottom: 2px solid var(--panel);  }
+.sh3 { color: var(--panel);  border-bottom: 2px solid var(--panel); }
 
-/* Columns */
-.grid-body { display: flex; }
-
-.time-axis { width: var(--time-col); flex-shrink: 0; position: relative; }
-.time-lbl {
-  position: absolute; right: 6px;
-  font-size: 10px; color: var(--muted); white-space: nowrap;
-  transform: translateY(-50%);
-}
-
+/* Body row */
+#grid-body { display: flex; }
+#time-col { width: 50px; flex-shrink: 0; position: relative; }
+.tl { position: absolute; right: 6px; font-size: 10px; color: var(--muted); transform: translateY(-50%); white-space: nowrap; }
 .stage-col { flex-shrink: 0; position: relative; }
-.hour-line { position: absolute; left: 0; right: 0; border-top: 1px solid rgba(255,255,255,0.04); pointer-events: none; }
+.hl { position: absolute; left: 0; right: 0; border-top: 1px solid rgba(255,255,255,0.04); pointer-events: none; }
 
-.ev-card {
+.ec {
   position: absolute; left: 3px; right: 3px;
-  background: var(--card-bg); border: 1px solid var(--border);
-  border-left: 3px solid var(--c, #555);
-  border-radius: 7px; padding: 6px 8px;
-  cursor: pointer; overflow: hidden;
-  transition: opacity 0.15s;
-  -webkit-tap-highlight-color: transparent;
+  background: var(--card); border: 1px solid var(--border);
+  border-left: 3px solid var(--lc, #555);
+  border-radius: 7px; padding: 5px 7px; overflow: hidden; cursor: pointer;
 }
-.ev-card.favorited { border-color: var(--orange); border-left-color: var(--orange); background: rgba(232,137,26,0.09); }
-.ev-card.g-hidden  { opacity: 0.07; pointer-events: none; }
-.ev-type { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.7px; }
-.ev-name { font-size: 11px; font-weight: 500; color: var(--white); line-height: 1.25; margin-top: 1px; }
-.ev-time { font-size: 10px; color: var(--muted); margin-top: 2px; }
-.ev-fav  { position: absolute; top: 5px; right: 6px; font-size: 11px; line-height: 1; }
+.ec.fav { border-color: var(--orange); border-left-color: var(--orange); background: rgba(232,137,26,0.1); }
+.ec.hide { opacity: 0.06; pointer-events: none; }
+.ec-type { font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.6px; }
+.ec-name { font-size: 11px; font-weight: 500; color: var(--white); line-height: 1.25; margin-top: 1px; }
+.ec-time { font-size: 9px; color: var(--muted); margin-top: 1px; }
+.ec-heart { position: absolute; top: 4px; right: 5px; font-size: 11px; }
 </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="header-top">
+<div id="header">
+  <div class="header-row">
     <div>
       <div class="logo">Good <span>Vibes</span> Only</div>
-      <div class="header-meta">20. Juni 2026 · Øresundsparken, Tårnby · Kl. 10–22</div>
+      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22</div>
     </div>
-    <button class="fav-btn" onclick="toggleFavPanel()">♥ Favoritter (<span id="fav-count">0</span>)</button>
+    <button class="fav-btn" onclick="toggleFav()">♥ Favoritter (<span id="fc">0</span>)</button>
   </div>
-  <div class="tabs-row" id="scene-tabs">
-    <button class="tab-btn c-all active" onclick="setStage('all',this)">Alle scener</button>
-    <button class="tab-btn c-s0"  onclick="setStage(0,this)">🎵 Fyrtårnet</button>
-    <button class="tab-btn c-s1"  onclick="setStage(1,this)">🎸 Hjerterytmen</button>
-    <button class="tab-btn c-s2"  onclick="setStage(2,this)">🎤 Solstrålen</button>
-    <button class="tab-btn c-s3"  onclick="setStage(3,this)">💬 Dialog Scenen</button>
+  <div class="tabs" id="stabs">
+    <button class="tab ca on" onclick="setStage('all',this)">Alle scener</button>
+    <button class="tab c0"    onclick="setStage(0,this)">🎵 Fyrtårnet</button>
+    <button class="tab c1"    onclick="setStage(1,this)">🎸 Hjerterytmen</button>
+    <button class="tab c2"    onclick="setStage(2,this)">🎤 Solstrålen</button>
+    <button class="tab c3"    onclick="setStage(3,this)">💬 Dialog Scenen</button>
   </div>
-  <div class="tabs-row" id="type-tabs">
-    <button class="tab-btn c-all active" onclick="setType('all',this)">Alle typer</button>
-    <button class="tab-btn" onclick="setType('musik',this)"><span class="type-dot" style="background:var(--musik)"></span>Musik</button>
-    <button class="tab-btn" onclick="setType('talk',this)"><span class="type-dot" style="background:var(--talk)"></span>Talk & Podcast</button>
-    <button class="tab-btn" onclick="setType('comedy',this)"><span class="type-dot" style="background:var(--comedy)"></span>Comedy</button>
-    <button class="tab-btn" onclick="setType('panel',this)"><span class="type-dot" style="background:var(--panel)"></span>Paneldebat</button>
-    <button class="tab-btn" onclick="setType('favoritter',this)">⭐ Favoritter</button>
+  <div class="tabs" id="ttabs">
+    <button class="tab ca on" onclick="setType('all',this)">Alle typer</button>
+    <button class="tab" onclick="setType('musik',this)"><span class="tdot" style="background:var(--musik)"></span>Musik</button>
+    <button class="tab" onclick="setType('talk',this)"><span class="tdot" style="background:var(--talk)"></span>Talk</button>
+    <button class="tab" onclick="setType('comedy',this)"><span class="tdot" style="background:var(--comedy)"></span>Comedy</button>
+    <button class="tab" onclick="setType('panel',this)"><span class="tdot" style="background:var(--panel)"></span>Panel</button>
+    <button class="tab" onclick="setType('fav',this)">⭐ Favoritter</button>
   </div>
-</header>
-
-<!-- Fav panel sits OUTSIDE grid-area so it doesn't scroll with grid -->
-<div id="fav-panel" class="fav-panel">
-  <h2>♥ Mine favoritter</h2>
-  <div id="fav-list" class="fav-list"></div>
 </div>
 
-<!-- THE GRID — scrolls freely in both directions -->
-<div class="grid-area" id="grid-area">
-  <div class="grid-inner" id="grid-inner">
-    <div class="stage-headers" id="stage-headers"></div>
-    <div class="grid-body">
-      <div class="time-axis" id="time-axis"></div>
-      <div id="stage-cols" style="display:flex"></div>
+<div id="fav-panel">
+  <h2>♥ Mine favoritter</h2>
+  <div id="fav-list"></div>
+</div>
+
+<div id="grid-wrap">
+  <div id="grid-inner">
+    <div id="stage-row"></div>
+    <div id="grid-body">
+      <div id="time-col"></div>
+      <div id="cols" style="display:flex"></div>
     </div>
   </div>
 </div>
 
 <script>
-const savedFavs = localStorage.getItem('gvo-favorites');
-const favorites = new Set(savedFavs ? JSON.parse(savedFavs).map(Number) : []);
-let currentStage = 'all';
-let currentType  = 'all';
+const SF = localStorage.getItem('gvo-fav');
+const favs = new Set(SF ? JSON.parse(SF).map(Number) : []);
+let cStage = 'all', cType = 'all';
 
-const DAY_START  = 600;
-const DAY_END    = 1320;
-const PX_PER_MIN = 1.5;
-const COL_W      = 160;
-
+const DAY0 = 600, DAY1 = 1320, PPM = 1.5, CW = 155;
 const stages = [
-  { name:'Fyrtårnet',     sub:'Hovedscene',        shCls:'sh0' },
-  { name:'Hjerterytmen',  sub:'Scene',              shCls:'sh1' },
-  { name:'Solstrålen',    sub:'Talks & Podcast',    shCls:'sh2' },
-  { name:'Dialog Scenen', sub:'Paneldebat & Talks', shCls:'sh3' },
+  {n:'Fyrtårnet',    s:'Hovedscene',     c:'sh0'},
+  {n:'Hjerterytmen', s:'Scene',          c:'sh1'},
+  {n:'Solstrålen',   s:'Talks/Podcast',  c:'sh2'},
+  {n:'Dialog Scenen',s:'Panel/Talks',    c:'sh3'},
+];
+const TC = {musik:'#E8891A',talk:'#4CAF8A',comedy:'#9B7FD4',panel:'#5B9BD5'};
+const TL = {musik:'Musik',talk:'Talk/Podcast',comedy:'Comedy',panel:'Paneldebat'};
+
+const evs = [
+  {id:1, g:0,sM:690, eM:720, t:'musik',n:'Bifald',           ti:'11:30–12:00'},
+  {id:2, g:0,sM:735, eM:780, t:'musik',n:'Dahlin',           ti:'12:15–13:00'},
+  {id:3, g:0,sM:825, eM:870, t:'musik',n:'Teka',             ti:'13:45–14:30'},
+  {id:4, g:0,sM:930, eM:975, t:'musik',n:'Chris de Sarandy', ti:'15:30–16:15'},
+  {id:5, g:0,sM:1035,eM:1080,t:'musik',n:'Mae Hill',         ti:'17:15–18:00'},
+  {id:6, g:0,sM:1140,eM:1185,t:'musik',n:'Jourdan Blue',     ti:'19:00–19:45'},
+  {id:7, g:0,sM:1260,eM:1305,t:'musik',n:'Sonny Tennet',     ti:'21:00–21:45'},
+  {id:8, g:1,sM:600, eM:645, t:'musik',n:'Scarlett',         ti:'10:00–10:45'},
+  {id:9, g:1,sM:660, eM:705, t:'musik',n:'Trainman Blues',   ti:'11:00–11:45'},
+  {id:10,g:1,sM:780, eM:825, t:'musik',n:'Joje',             ti:'13:00–13:45'},
+  {id:11,g:1,sM:885, eM:930, t:'musik',n:"John D'Ambrosio",  ti:'14:45–15:30'},
+  {id:12,g:1,sM:975, eM:1020,t:'musik',n:'Bjarne',           ti:'16:15–17:00'},
+  {id:13,g:1,sM:1080,eM:1140,t:'panel',n:'Paneldebat del 1', ti:'18:00–19:00'},
+  {id:14,g:1,sM:1200,eM:1260,t:'panel',n:'Paneldebat del 2', ti:'20:00–21:00'},
+  {id:15,g:2,sM:600, eM:655, t:'talk',  n:'Når livet ikke er sort/hvidt',ti:'10:00–10:55'},
+  {id:16,g:2,sM:660, eM:715, t:'talk',  n:'Talk om alkohol',              ti:'11:00–11:55'},
+  {id:17,g:2,sM:780, eM:840, t:'comedy',n:'Comedy Show',                  ti:'13:00–14:00'},
+  {id:18,g:2,sM:825, eM:870, t:'talk',  n:'Ludvigs Podcast',              ti:'13:45–14:30'},
+  {id:19,g:2,sM:880, eM:930, t:'talk',  n:'LET LIVET',                    ti:'14:40–15:30'},
+  {id:20,g:2,sM:960, eM:1010,t:'talk',  n:'Talk & Q&A',                   ti:'16:00–16:50'},
+  {id:21,g:2,sM:1020,eM:1070,t:'talk',  n:'Lars Thiesgaard',              ti:'17:00–17:50'},
+  {id:22,g:2,sM:1080,eM:1140,t:'panel', n:'Paneldebat del 1',             ti:'18:00–19:00'},
+  {id:23,g:2,sM:1200,eM:1260,t:'panel', n:'Paneldebat del 2',             ti:'20:00–21:00'},
+  {id:24,g:3,sM:600, eM:645, t:'talk', n:'Heart Songs',         ti:'10:00–10:45'},
+  {id:25,g:3,sM:660, eM:715, t:'talk', n:'ADHD & Autisme',       ti:'11:00–11:55'},
+  {id:26,g:3,sM:780, eM:825, t:'talk', n:'Bryd tabuet',          ti:'13:00–13:45'},
+  {id:27,g:3,sM:825, eM:870, t:'talk', n:'Bryd tabuet – del 2',  ti:'13:45–14:30'},
+  {id:28,g:3,sM:870, eM:930, t:'talk', n:'Den Gode Gerning',     ti:'14:30–15:30'},
+  {id:29,g:3,sM:960, eM:1010,t:'talk', n:'Dr. Tommy Pang',       ti:'16:00–16:50'},
+  {id:30,g:3,sM:1020,eM:1065,t:'talk', n:'Samtaler om livet',    ti:'17:00–17:45'},
+  {id:31,g:3,sM:1080,eM:1140,t:'panel',n:'Paneldebat del 1',     ti:'18:00–19:00'},
+  {id:32,g:3,sM:1200,eM:1260,t:'panel',n:'Paneldebat del 2',     ti:'20:00–21:00'},
 ];
 
-const typeColor = { musik:'#E8891A', talk:'#4CAF8A', comedy:'#9B7FD4', panel:'#5B9BD5' };
-const typeLabel = { musik:'Musik', talk:'Talk / Podcast', comedy:'Comedy', panel:'Paneldebat' };
-
-const events = [
-  { id:1,  stage:0, sM:690,  eM:720,  type:'musik', name:'Bifald',            time:'11:30–12:00' },
-  { id:2,  stage:0, sM:735,  eM:780,  type:'musik', name:'Dahlin',            time:'12:15–13:00' },
-  { id:3,  stage:0, sM:825,  eM:870,  type:'musik', name:'Teka',              time:'13:45–14:30' },
-  { id:4,  stage:0, sM:930,  eM:975,  type:'musik', name:'Chris de Sarandy',  time:'15:30–16:15' },
-  { id:5,  stage:0, sM:1035, eM:1080, type:'musik', name:'Mae Hill',          time:'17:15–18:00' },
-  { id:6,  stage:0, sM:1140, eM:1185, type:'musik', name:'Jourdan Blue',      time:'19:00–19:45' },
-  { id:7,  stage:0, sM:1260, eM:1305, type:'musik', name:'Sonny Tennet',      time:'21:00–21:45' },
-  { id:8,  stage:1, sM:600,  eM:645,  type:'musik', name:'Scarlett',          time:'10:00–10:45' },
-  { id:9,  stage:1, sM:660,  eM:705,  type:'musik', name:'Trainman Blues',    time:'11:00–11:45' },
-  { id:10, stage:1, sM:780,  eM:825,  type:'musik', name:'Joje',              time:'13:00–13:45' },
-  { id:11, stage:1, sM:885,  eM:930,  type:'musik', name:"John D'Ambrosio",   time:'14:45–15:30' },
-  { id:12, stage:1, sM:975,  eM:1020, type:'musik', name:'Bjarne',            time:'16:15–17:00' },
-  { id:13, stage:1, sM:1080, eM:1140, type:'panel', name:'Paneldebat del 1',  time:'18:00–19:00' },
-  { id:14, stage:1, sM:1200, eM:1260, type:'panel', name:'Paneldebat del 2',  time:'20:00–21:00' },
-  { id:15, stage:2, sM:600,  eM:655,  type:'talk',   name:'Når livet ikke er sort/hvidt', time:'10:00–10:55' },
-  { id:16, stage:2, sM:660,  eM:715,  type:'talk',   name:'Talk om alkohol',              time:'11:00–11:55' },
-  { id:17, stage:2, sM:780,  eM:840,  type:'comedy', name:'Comedy Show',                  time:'13:00–14:00' },
-  { id:18, stage:2, sM:825,  eM:870,  type:'talk',   name:'Ludvigs Podcast',              time:'13:45–14:30' },
-  { id:19, stage:2, sM:880,  eM:930,  type:'talk',   name:'LET LIVET',                    time:'14:40–15:30' },
-  { id:20, stage:2, sM:960,  eM:1010, type:'talk',   name:'Talk & Q&A',                   time:'16:00–16:50' },
-  { id:21, stage:2, sM:1020, eM:1070, type:'talk',   name:'Lars Thiesgaard',              time:'17:00–17:50' },
-  { id:22, stage:2, sM:1080, eM:1140, type:'panel',  name:'Paneldebat del 1',             time:'18:00–19:00' },
-  { id:23, stage:2, sM:1200, eM:1260, type:'panel',  name:'Paneldebat del 2',             time:'20:00–21:00' },
-  { id:24, stage:3, sM:600,  eM:645,  type:'talk',  name:'Heart Songs',          time:'10:00–10:45' },
-  { id:25, stage:3, sM:660,  eM:715,  type:'talk',  name:'ADHD & Autisme',       time:'11:00–11:55' },
-  { id:26, stage:3, sM:780,  eM:825,  type:'talk',  name:'Bryd tabuet',          time:'13:00–13:45' },
-  { id:27, stage:3, sM:825,  eM:870,  type:'talk',  name:'Bryd tabuet – del 2',  time:'13:45–14:30' },
-  { id:28, stage:3, sM:870,  eM:930,  type:'talk',  name:'Den Gode Gerning',     time:'14:30–15:30' },
-  { id:29, stage:3, sM:960,  eM:1010, type:'talk',  name:'Dr. Tommy Pang',       time:'16:00–16:50' },
-  { id:30, stage:3, sM:1020, eM:1065, type:'talk',  name:'Samtaler om livet',    time:'17:00–17:45' },
-  { id:31, stage:3, sM:1080, eM:1140, type:'panel', name:'Paneldebat del 1',     time:'18:00–19:00' },
-  { id:32, stage:3, sM:1200, eM:1260, type:'panel', name:'Paneldebat del 2',     time:'20:00–21:00' },
-];
-
-function minToStr(m) { return `${Math.floor(m/60)}:${String(m%60).padStart(2,'0')}`; }
-function isVisible(ev) {
-  const stageOk = currentStage === 'all' || ev.stage === currentStage;
-  const typeOk  = currentType === 'all' ? true
-    : currentType === 'favoritter' ? favorites.has(ev.id)
-    : ev.type === currentType;
-  return stageOk && typeOk;
+function ms(m){return `${Math.floor(m/60)}:${String(m%60).padStart(2,'0')}`;}
+function vis(e){
+  const sg = cStage==='all'||e.g===cStage;
+  const ty = cType==='all'?true:cType==='fav'?favs.has(e.id):e.t===cType;
+  return sg&&ty;
 }
 
-function toggleFav(id) {
-  if (favorites.has(id)) favorites.delete(id);
-  else favorites.add(id);
-  localStorage.setItem('gvo-favorites', JSON.stringify([...favorites]));
-  document.getElementById('fav-count').textContent = favorites.size;
-  renderGrid();
-  renderFavList();
+function saveFav(id){
+  if(favs.has(id)) favs.delete(id); else favs.add(id);
+  localStorage.setItem('gvo-fav',JSON.stringify([...favs]));
+  document.getElementById('fc').textContent = favs.size;
+  render(); renderFavList();
 }
 
-function toggleFavPanel() {
-  const p = document.getElementById('fav-panel');
+function toggleFav(){
+  const p=document.getElementById('fav-panel');
   p.classList.toggle('show');
-  localStorage.setItem('gvo-panel-open', p.classList.contains('show'));
+  localStorage.setItem('gvo-po', p.classList.contains('show'));
+  positionFavPanel();
   renderFavList();
 }
 
-function renderFavList() {
-  const list = document.getElementById('fav-list');
-  const favEvs = events.filter(e => favorites.has(e.id)).sort((a,b) => a.sM - b.sM);
-  if (!favEvs.length) {
-    list.innerHTML = '<p class="fav-empty">Tryk på et event for at tilføje det til dine favoritter</p>';
-    return;
-  }
-  list.innerHTML = favEvs.map(ev => `
-    <div class="fav-item">
-      <div class="fav-dot" style="background:${typeColor[ev.type]}"></div>
-      <div class="fav-name">${ev.name}</div>
-      <div class="fav-time">${ev.time} · ${stages[ev.stage].name}</div>
-      <button class="fav-remove" onclick="toggleFav(${ev.id})" title="Fjern">✕</button>
+function positionFavPanel(){
+  const h=document.getElementById('header');
+  const p=document.getElementById('fav-panel');
+  p.style.top = (h.offsetHeight+6)+'px';
+}
+
+function renderFavList(){
+  const list=document.getElementById('fav-list');
+  const fe=evs.filter(e=>favs.has(e.id)).sort((a,b)=>a.sM-b.sM);
+  if(!fe.length){list.innerHTML='<p class="fi-empty">Tryk på et event for at tilføje til favoritter</p>';return;}
+  list.innerHTML=fe.map(e=>`
+    <div class="fi">
+      <div class="fi-dot" style="background:${TC[e.t]}"></div>
+      <div class="fi-name">${e.n}</div>
+      <div class="fi-time">${e.ti}<br>${stages[e.g].n}</div>
+      <button class="fi-rm" onclick="saveFav(${e.id})">✕</button>
     </div>`).join('');
 }
 
-function setStage(s, btn) {
-  currentStage = s === 'all' ? 'all' : Number(s);
-  document.querySelectorAll('#scene-tabs .tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderGrid();
+function setStage(s,btn){
+  cStage=s==='all'?'all':Number(s);
+  document.querySelectorAll('#stabs .tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  render();
+}
+function setType(t,btn){
+  cType=t;
+  document.querySelectorAll('#ttabs .tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  render();
 }
 
-function setType(t, btn) {
-  currentType = t;
-  document.querySelectorAll('#type-tabs .tab-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderGrid();
-}
-
-function renderGrid() {
-  const totalH = (DAY_END - DAY_START) * PX_PER_MIN;
-  const visStages = currentStage === 'all' ? [0,1,2,3] : [currentStage];
+function render(){
+  const totalH=(DAY1-DAY0)*PPM;
+  const vg=cStage==='all'?[0,1,2,3]:[cStage];
 
   // Stage headers
-  const headersEl = document.getElementById('stage-headers');
-  headersEl.innerHTML = '<div class="time-spacer"></div>' +
-    visStages.map(si => `
-      <div class="stage-head ${stages[si].shCls}" style="width:${COL_W}px">
-        ${stages[si].name}
-        <div style="font-size:9px;font-family:'DM Sans',sans-serif;font-weight:300;text-transform:none;letter-spacing:0;opacity:0.7;margin-top:1px">${stages[si].sub}</div>
-      </div>`).join('');
+  document.getElementById('stage-row').innerHTML=
+    '<div class="time-gap"></div>'+
+    vg.map(i=>`<div class="sh ${stages[i].c}" style="width:${CW}px">${stages[i].n}<div style="font-size:9px;font-weight:300;text-transform:none;letter-spacing:0;opacity:0.7">${stages[i].s}</div></div>`).join('');
 
-  // Time axis
-  const timeEl = document.getElementById('time-axis');
-  timeEl.style.height = totalH + 'px';
-  let tHtml = '';
-  for (let m = DAY_START; m <= DAY_END; m += 60) {
-    tHtml += `<div class="time-lbl" style="top:${(m-DAY_START)*PX_PER_MIN}px">${minToStr(m)}</div>`;
-  }
-  timeEl.innerHTML = tHtml;
+  // Time col
+  const tc=document.getElementById('time-col');
+  tc.style.height=totalH+'px';
+  tc.innerHTML=Array.from({length:13},(_,i)=>{
+    const m=DAY0+i*60;
+    return `<div class="tl" style="top:${(m-DAY0)*PPM}px">${ms(m)}</div>`;
+  }).join('');
 
-  // Columns
-  const colsEl = document.getElementById('stage-cols');
-  colsEl.innerHTML = '';
-  visStages.forEach(si => {
-    const col = document.createElement('div');
-    col.className = 'stage-col';
-    col.style.cssText = `width:${COL_W}px;height:${totalH}px`;
-
-    for (let m = DAY_START; m <= DAY_END; m += 60) {
-      const line = document.createElement('div');
-      line.className = 'hour-line';
-      line.style.top = ((m-DAY_START)*PX_PER_MIN) + 'px';
-      col.appendChild(line);
+  // Stage cols
+  const cols=document.getElementById('cols');
+  cols.innerHTML='';
+  vg.forEach(si=>{
+    const col=document.createElement('div');
+    col.className='stage-col';
+    col.style.cssText=`width:${CW}px;height:${totalH}px`;
+    // hour lines
+    for(let m=DAY0;m<=DAY1;m+=60){
+      const hl=document.createElement('div');
+      hl.className='hl';
+      hl.style.top=((m-DAY0)*PPM)+'px';
+      col.appendChild(hl);
     }
-
-    events.filter(e => e.stage === si).forEach(ev => {
-      const top  = (ev.sM - DAY_START) * PX_PER_MIN;
-      const h    = Math.max((ev.eM - ev.sM) * PX_PER_MIN - 4, 32);
-      const fav  = favorites.has(ev.id);
-      const vis  = isVisible(ev);
-      const card = document.createElement('div');
-      card.className = `ev-card${fav?' favorited':''}${!vis?' g-hidden':''}`;
-      card.style.cssText = `top:${top}px;height:${h}px;--c:${typeColor[ev.type]}`;
-      card.innerHTML = `
-        <div class="ev-type" style="color:${typeColor[ev.type]}">${typeLabel[ev.type]}</div>
-        <div class="ev-name">${ev.name}</div>
-        <div class="ev-time">${ev.time}</div>
-        <div class="ev-fav">${fav?'❤️':'🤍'}</div>`;
-      card.addEventListener('click', () => toggleFav(ev.id));
+    // events
+    evs.filter(e=>e.g===si).forEach(e=>{
+      const top=(e.sM-DAY0)*PPM;
+      const h=Math.max((e.eM-e.sM)*PPM-4,30);
+      const f=favs.has(e.id), v=vis(e);
+      const card=document.createElement('div');
+      card.className=`ec${f?' fav':''}${!v?' hide':''}`;
+      card.style.cssText=`top:${top}px;height:${h}px;--lc:${TC[e.t]}`;
+      card.innerHTML=`<div class="ec-type" style="color:${TC[e.t]}">${TL[e.t]}</div><div class="ec-name">${e.n}</div><div class="ec-time">${e.ti}</div><div class="ec-heart">${f?'❤️':'🤍'}</div>`;
+      card.addEventListener('click',()=>saveFav(e.id));
       col.appendChild(card);
     });
-    colsEl.appendChild(col);
+    cols.appendChild(col);
   });
 }
 
-renderGrid();
+function setGridTop(){
+  const h=document.getElementById('header').offsetHeight;
+  document.getElementById('grid-wrap').style.top=h+'px';
+}
+
+window.addEventListener('resize',()=>{setGridTop();positionFavPanel();});
+setGridTop();
+render();
 renderFavList();
-document.getElementById('fav-count').textContent = favorites.size;
-if (localStorage.getItem('gvo-panel-open') === 'true') {
+document.getElementById('fc').textContent=favs.size;
+if(localStorage.getItem('gvo-po')==='true'){
   document.getElementById('fav-panel').classList.add('show');
+  positionFavPanel();
   renderFavList();
 }
 </script>
