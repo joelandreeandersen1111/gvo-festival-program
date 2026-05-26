@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- VERSION 2.8 — kort viser altid alt indhold + mere luft i siderne -->
+<!-- VERSION 2.9 — mere lodret plads per time-slot -->
 <html lang="da">
 <head>
 <meta charset="UTF-8">
@@ -131,7 +131,7 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
   <div class="header-row">
     <div>
       <div class="logo">Good <span>Vibes</span> Only</div>
-      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22 · <span style="color:var(--orange)">v2.8</span></div>
+      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22 · <span style="color:var(--orange)">v2.9</span></div>
     </div>
     <button class="fav-btn" onclick="toggleFavPanel()">♥ Favoritter (<span id="fc">0</span>)</button>
   </div>
@@ -175,7 +175,7 @@ const SF = localStorage.getItem('gvo-fav');
 const favs = new Set(SF ? JSON.parse(SF).map(Number) : []);
 let cStage = 'all', cType = 'all';
 
-const DAY0=600, DAY1=1320, PPM=1.5, TIME_W=50;
+const DAY0=600, DAY1=1320, PPM=2.5, TIME_W=50;
 const SC=['#F5A623','#E8524A','#F0C030','#5B9BD5'];
 const stages=[
   {n:'🔦 Fyrtårnet',     s:'Hovedscene',    c:'sh0'},
