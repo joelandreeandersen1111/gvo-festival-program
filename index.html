@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- VERSION 3.4 — større tidsrum for mere plads i kortene -->
+<!-- VERSION 3.5 — PPM justeret + gæster på Bryd tabuet -->
 <html lang="da">
 <head>
 <meta charset="UTF-8">
@@ -132,7 +132,7 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
   <div class="header-row">
     <div>
       <div class="logo">Good <span>Vibes</span> Only</div>
-      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22 · <span style="color:var(--orange)">v3.4</span></div>
+      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22 · <span style="color:var(--orange)">v3.5</span></div>
     </div>
     <button class="fav-btn" onclick="toggleFavPanel()">♥ Favoritter (<span id="fc">0</span>)</button>
   </div>
@@ -176,7 +176,7 @@ const SF = localStorage.getItem('gvo-fav');
 const favs = new Set(SF ? JSON.parse(SF).map(Number) : []);
 let cStage = 'all', cType = 'all';
 
-const DAY0=600, DAY1=1320, PPM=3.5, TIME_W=50;
+const DAY0=600, DAY1=1320, PPM=3.0, TIME_W=50;
 const SC=['#F5A623','#E8524A','#F0C030','#5B9BD5'];
 const stages=[
   {n:'🔦 Fyrtårnet',     s:'Hovedscene',    c:'sh0'},
@@ -217,8 +217,8 @@ const evs=[
   // DIALOG SCENEN
   {id:24,g:3,sM:600, eM:645, t:'talk', n:'Interaktivt foredrag med hjertepauser',              s:'Vært: Anne Ryom fra Heart Songs',                               ti:'10:00–10:45'},
   {id:25,g:3,sM:660, eM:705, t:'talk', n:'ADHD og Autisme – Vejen gennem Ungdommen',           s:'Vært: Alvin Sareen · Sonja Lovdal',                             ti:'11:00–11:45'},
-  {id:26,g:3,sM:780, eM:825, t:'talk', n:'Bryd tabuet "en ungdom i krise" del 1',              s:'Vært: Niklas Hindsberg · Malika Olsen',                         ti:'13:00–13:45'},
-  {id:27,g:3,sM:825, eM:870, t:'talk', n:'Bryd tabuet "en ungdom i krise" del 2',              s:'Vært: Niklas Hindsberg · Malika Olsen',                         ti:'13:45–14:30'},
+  {id:26,g:3,sM:780, eM:825, t:'talk', n:'Bryd tabuet "en ungdom i krise" del 1',              s:'Vært: Niklas Hindsberg · Malika Olsen, Emma Bækgaard m.fl.',    ti:'13:00–13:45'},
+  {id:27,g:3,sM:825, eM:870, t:'talk', n:'Bryd tabuet "en ungdom i krise" del 2',              s:'Vært: Niklas Hindsberg · Daniel Jørgensen, Laura Petersen m.fl.',ti:'13:45–14:30'},
   {id:28,g:3,sM:900, eM:945, t:'talk', n:'Den Gode Gerning',                                   s:'Vært: Pelle Hvenegaard',                                        ti:'15:00–15:45'},
   {id:29,g:3,sM:960, eM:1005,t:'talk', n:'Motivation, mental sundhed, depression og hjernens sundhed', s:'Vært: Dr. Tommy Pang · På engelsk',                     ti:'16:00–16:45'},
   {id:30,g:3,sM:1020,eM:1065,t:'talk', n:'Samtaler om livet, valg og det der former os',       s:'Vært: Emilia Flora · Christoffer Hansen m.fl.',                 ti:'17:00–17:45'},
@@ -320,7 +320,7 @@ function render(){
     }
     evs.filter(e=>e.g===si).forEach(e=>{
       const slotH = (e.eM-e.sM)*PPM - 4;
-      const minH  = 80; // enough for type + name + sub + time
+      const minH  = 72; // enough for type + name + sub + time
       const h     = Math.max(slotH, minH);
       const top  = (e.sM-DAY0)*PPM;
       const f=favs.has(e.id),v=vis(e);
