@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- VERSION 3.0 — opdaterede tider, navne, værter og gæster -->
+<!-- VERSION 3.1 — favoritliste uden vært/gæst info -->
 <html lang="da">
 <head>
 <meta charset="UTF-8">
@@ -132,7 +132,7 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
   <div class="header-row">
     <div>
       <div class="logo">Good <span>Vibes</span> Only</div>
-      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22 · <span style="color:var(--orange)">v3.0</span></div>
+      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22 · <span style="color:var(--orange)">v3.1</span></div>
     </div>
     <button class="fav-btn" onclick="toggleFavPanel()">♥ Favoritter (<span id="fc">0</span>)</button>
   </div>
@@ -261,7 +261,6 @@ function renderFavList(){
     <div class="fi">
       <div class="fi-dot" style="background:${SC[e.g]}"></div>
       <div class="fi-name">${e.n}</div>
-      ${e.s ? `<div style="font-size:10px;color:#888;margin-top:1px">${e.s}</div>` : ''}
       <div class="fi-time">${e.ti}<br>${stages[e.g].n}</div>
       <button class="fi-rm" onclick="saveFav(${e.id})">✕</button>
     </div>`).join('');
