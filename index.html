@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- VERSION 3.1 — favoritliste uden vært/gæst info -->
+<!-- VERSION 3.4 — større tidsrum for mere plads i kortene -->
 <html lang="da">
 <head>
 <meta charset="UTF-8">
@@ -132,7 +132,7 @@ html, body { height: 100%; width: 100%; overflow: hidden; background: var(--blac
   <div class="header-row">
     <div>
       <div class="logo">Good <span>Vibes</span> Only</div>
-      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22 · <span style="color:var(--orange)">v3.1</span></div>
+      <div class="meta">20. Juni 2026 · Øresundsparken · Kl. 10–22 · <span style="color:var(--orange)">v3.4</span></div>
     </div>
     <button class="fav-btn" onclick="toggleFavPanel()">♥ Favoritter (<span id="fc">0</span>)</button>
   </div>
@@ -176,7 +176,7 @@ const SF = localStorage.getItem('gvo-fav');
 const favs = new Set(SF ? JSON.parse(SF).map(Number) : []);
 let cStage = 'all', cType = 'all';
 
-const DAY0=600, DAY1=1320, PPM=2.5, TIME_W=50;
+const DAY0=600, DAY1=1320, PPM=3.5, TIME_W=50;
 const SC=['#F5A623','#E8524A','#F0C030','#5B9BD5'];
 const stages=[
   {n:'🔦 Fyrtårnet',     s:'Hovedscene',    c:'sh0'},
@@ -202,28 +202,28 @@ const evs=[
   {id:10,g:1,sM:780, eM:825, t:'musik',n:'Joje',             s:'Sydkorea',                                                                                ti:'13:00–13:45'},
   {id:11,g:1,sM:885, eM:930, t:'musik',n:"John D'Ambrosio",  s:'Storbritannien',                                                                          ti:'14:45–15:30'},
   {id:12,g:1,sM:975, eM:1020,t:'musik',n:'Bjarne',           s:'Tyskland',                                                                                ti:'16:15–17:00'},
-  {id:13,g:1,sM:1080,eM:1140,t:'panel',n:'Paneldebat del 1 – Psykologi, forskning og samfund', s:'Vært: Nils Gisli · Aida Bikic · René Rosfort · Ole Henrik Hansen · Winnie Sørensen · Rune Møller Christensen', ti:'18:00–19:00'},
-  {id:14,g:1,sM:1200,eM:1260,t:'panel',n:'Paneldebat del 2 – Psykologi, forskning og samfund', s:'Vært: Nils Gisli · + Henning R. Jensen (kvantefysiker)', ti:'20:00–21:00'},
+  {id:13,g:1,sM:1080,eM:1140,t:'panel',n:'Del 1 – Psykologi, forskning og samfund', s:'Vært: Nils Gisli · Aida Bikic m.fl.', ti:'18:00–19:00'},
+  {id:14,g:1,sM:1200,eM:1260,t:'panel',n:'Del 2 – Psykologi, forskning og samfund', s:'Vært: Nils Gisli · Henning R. Jensen m.fl.', ti:'20:00–21:00'},
   // SOLSTRÅLEN
-  {id:15,g:2,sM:600, eM:655, t:'talk',  n:'Når livet ikke er sort/hvidt',                      s:'Vært: Emilia Flora · Mathias Holsaae, Patrick Simiglai m.fl.',                                    ti:'10:00–10:55'},
-  {id:16,g:2,sM:660, eM:715, t:'talk',  n:'Talk om alkohol',                                   s:'Alkoholfri Brødre · Umut Sakarya, Marie Brixtofte & Helle Lindgaard',                             ti:'11:00–11:55'},
-  {id:17,g:2,sM:780, eM:840, t:'comedy',n:'Comedy Show',                                       s:'Vært: Anders Stjernholm · Gæster: Mia Westergaard · Mikkel Bech · Henrik Danielsen',             ti:'13:00–14:00'},
-  {id:18,g:2,sM:840, eM:885, t:'talk',  n:'Ludvigs Podcast',                                   s:'Vært: Ludvig Larsen · Gæster: Nicklas Holst, Michelle Opiola & Carsten Juul',                     ti:'14:00–14:45'},
-  {id:19,g:2,sM:885, eM:930, t:'talk',  n:'LET LIVET',                                         s:'Sara Maria Franch-Mærkedahl & Psykolog Pia Callesen',                                             ti:'14:45–15:30'},
-  {id:20,g:2,sM:960, eM:1005,t:'talk',  n:'Når traumer og mistrivsel bliver til diagnoser',    s:'Vært: Anders Stjernholm · Gæster: Agnes Marie Frey, Andersen Sørensen, Mathias Vinsted Munk',    ti:'16:00–16:45'},
-  {id:21,g:2,sM:1020,eM:1065,t:'talk',  n:'Talk om stemmens kraft, identitet og kreativitet',  s:'Vært: Lars Thiesgaard – "Manden med de 1000 stemmer"',                                            ti:'17:00–17:45'},
-  {id:22,g:2,sM:1080,eM:1140,t:'panel', n:'Paneldebat del 1 – Præstation, arbejdsliv og mental balance', s:'Vært: Kisser Paludan · Gorm Wisweh · Mads Andreasen · Nicklas Holst · Christoffer Hansen · Ludvig Larsen', ti:'18:00–19:00'},
-  {id:23,g:2,sM:1200,eM:1260,t:'panel', n:'Paneldebat del 2 – Præstation, arbejdsliv og mental balance', s:'Vært: Kisser Paludan · + Lars Thiesgaard',                                               ti:'20:00–21:00'},
+  {id:15,g:2,sM:600, eM:655, t:'talk',  n:'Når livet ikke er sort/hvidt',                      s:'Vært: Emilia Flora · Mathias Holsaae m.fl.',                   ti:'10:00–10:55'},
+  {id:16,g:2,sM:660, eM:715, t:'talk',  n:'Talk om alkohol',                                   s:'Alkoholfri Brødre · Umut Sakarya m.fl.',                        ti:'11:00–11:55'},
+  {id:17,g:2,sM:780, eM:840, t:'comedy',n:'Comedy Show',                                       s:'Vært: Anders Stjernholm · Mia Westergaard m.fl.',               ti:'13:00–14:00'},
+  {id:18,g:2,sM:840, eM:885, t:'talk',  n:'Ludvigs Podcast',                                   s:'Vært: Ludvig Larsen · Nicklas Holst m.fl.',                     ti:'14:00–14:45'},
+  {id:19,g:2,sM:885, eM:930, t:'talk',  n:'LET LIVET',                                         s:'Sara Maria Franch-Mærkedahl & Pia Callesen',                    ti:'14:45–15:30'},
+  {id:20,g:2,sM:960, eM:1005,t:'talk',  n:'Når traumer og mistrivsel bliver til diagnoser',    s:'Vært: Anders Stjernholm · Agnes Marie Frey m.fl.',              ti:'16:00–16:45'},
+  {id:21,g:2,sM:1020,eM:1065,t:'talk',  n:'Talk om stemmens kraft, identitet og kreativitet',  s:'Vært: Lars Thiesgaard',                                         ti:'17:00–17:45'},
+  {id:22,g:2,sM:1080,eM:1140,t:'panel', n:'Del 1 – Præstation, arbejdsliv og mental balance', s:'Vært: Kisser Paludan · Gorm Wisweh m.fl.',                      ti:'18:00–19:00'},
+  {id:23,g:2,sM:1200,eM:1260,t:'panel', n:'Del 2 – Præstation, arbejdsliv og mental balance', s:'Vært: Kisser Paludan · Lars Thiesgaard m.fl.',                  ti:'20:00–21:00'},
   // DIALOG SCENEN
-  {id:24,g:3,sM:600, eM:645, t:'talk', n:'Interaktivt foredrag med hjertepauser',              s:'Vært: Anne Ryom fra Heart Songs',                                                                  ti:'10:00–10:45'},
-  {id:25,g:3,sM:660, eM:705, t:'talk', n:'ADHD og Autisme – Vejen gennem Ungdommen',           s:'Vært: Alvin Sareen · Gæst: Sonja Lovdal',                                                         ti:'11:00–11:45'},
-  {id:26,g:3,sM:780, eM:825, t:'talk', n:'Bryd tabuet "en ungdom i krise" del 1',              s:'Vært: Niklas Hindsberg · Gæst: Malika Olsen',                                                     ti:'13:00–13:45'},
-  {id:27,g:3,sM:825, eM:870, t:'talk', n:'Bryd tabuet "en ungdom i krise" del 2',              s:'Vært: Niklas Hindsberg · Gæst: Malika Olsen',                                                     ti:'13:45–14:30'},
-  {id:28,g:3,sM:900, eM:945, t:'talk', n:'Den Gode Gerning',                                   s:'Vært: Pelle Hvenegaard',                                                                          ti:'15:00–15:45'},
-  {id:29,g:3,sM:960, eM:1005,t:'talk', n:'Motivation, mental sundhed, depression og hjernens sundhed', s:'Vært: Dr. Tommy Pang (hjerneforsker) · På engelsk',                                      ti:'16:00–16:45'},
-  {id:30,g:3,sM:1020,eM:1065,t:'talk', n:'Samtaler om livet, valg og det der former os',       s:'Vært: Emilia Flora · Gæster: Christoffer Hansen · Michelle Opiola · Birgit Bundesen',            ti:'17:00–17:45'},
-  {id:31,g:3,sM:1080,eM:1140,t:'panel',n:'Paneldebat del 1 – Livskriser, modgang og personlig historie', s:'Vært: Esben Dalgaard · Lise Dam · Jonas · Simon Nielsen · Niklas Hindsberg · Malika Olsen', ti:'18:00–19:00'},
-  {id:32,g:3,sM:1200,eM:1260,t:'panel',n:'Paneldebat del 2 – Livskriser, modgang og personlig historie', s:'Vært: Esben Dalgaard · + Dan Schlosser (skuespiller)',                                  ti:'20:00–21:00'},
+  {id:24,g:3,sM:600, eM:645, t:'talk', n:'Interaktivt foredrag med hjertepauser',              s:'Vært: Anne Ryom fra Heart Songs',                               ti:'10:00–10:45'},
+  {id:25,g:3,sM:660, eM:705, t:'talk', n:'ADHD og Autisme – Vejen gennem Ungdommen',           s:'Vært: Alvin Sareen · Sonja Lovdal',                             ti:'11:00–11:45'},
+  {id:26,g:3,sM:780, eM:825, t:'talk', n:'Bryd tabuet "en ungdom i krise" del 1',              s:'Vært: Niklas Hindsberg · Malika Olsen',                         ti:'13:00–13:45'},
+  {id:27,g:3,sM:825, eM:870, t:'talk', n:'Bryd tabuet "en ungdom i krise" del 2',              s:'Vært: Niklas Hindsberg · Malika Olsen',                         ti:'13:45–14:30'},
+  {id:28,g:3,sM:900, eM:945, t:'talk', n:'Den Gode Gerning',                                   s:'Vært: Pelle Hvenegaard',                                        ti:'15:00–15:45'},
+  {id:29,g:3,sM:960, eM:1005,t:'talk', n:'Motivation, mental sundhed, depression og hjernens sundhed', s:'Vært: Dr. Tommy Pang · På engelsk',                     ti:'16:00–16:45'},
+  {id:30,g:3,sM:1020,eM:1065,t:'talk', n:'Samtaler om livet, valg og det der former os',       s:'Vært: Emilia Flora · Christoffer Hansen m.fl.',                 ti:'17:00–17:45'},
+  {id:31,g:3,sM:1080,eM:1140,t:'panel',n:'Del 1 – Livskriser, modgang og personlig historie', s:'Vært: Esben Dalgaard · Lise Dam m.fl.',                         ti:'18:00–19:00'},
+  {id:32,g:3,sM:1200,eM:1260,t:'panel',n:'Del 2 – Livskriser, modgang og personlig historie', s:'Vært: Esben Dalgaard · Dan Schlosser m.fl.',                    ti:'20:00–21:00'},
 ];
 
 function ms(m){return `${Math.floor(m/60)}:${String(m%60).padStart(2,'0')}`;}
@@ -320,7 +320,7 @@ function render(){
     }
     evs.filter(e=>e.g===si).forEach(e=>{
       const slotH = (e.eM-e.sM)*PPM - 4;
-      const minH  = 72; // enough for type + name + sub + time
+      const minH  = 80; // enough for type + name + sub + time
       const h     = Math.max(slotH, minH);
       const top  = (e.sM-DAY0)*PPM;
       const f=favs.has(e.id),v=vis(e);
